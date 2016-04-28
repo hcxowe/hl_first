@@ -1,0 +1,184 @@
+/**
+ * 进度条和缩列图UI @author liuxg 
+ */
+.gpd {
+	height: 3px;
+	background-color: #ddd;
+	margin: 30px 0px;
+	border-radius: 3px;
+}
+
+.gpd .gpd-progress {
+	background-color: #176785;
+	background-image: linear-gradient(to right, #176785, #499989);
+	height: 3px;
+	-moz-box-shadow: 0 0 3px 0 #499989;
+	-webkit-box-shadow: 0 0 3px 0 #499989;
+	box-shadow: 0 0 3px 0 #499989;
+	width: 20%;
+	text-align: right;
+	border-radius: 3px;
+}
+
+.gpd .gpd-progress .gpd-numnber {
+	font-size: 12px;
+	position: relative;
+	top: -10px;
+	right: -25px;
+	background-color: #fff;
+}
+
+.thumbail-list {
+	padding-top : 5px; 
+	background-color : #ccc ;
+	min-width : 820px ;
+	min-height : 500px ;
+}
+
+.thumbail-item {
+	position: relative;
+	font-family: 寰蒋闆呴粦;
+	font-size: 13px;
+	display: inline-block;
+	color: #FFF;
+	float : left ;
+	margin-left : 5px;
+	margin-bottom : 5px; 
+}
+
+.thumbail-item  img {
+	width: 200px;
+	height: 150px;
+}
+
+.thumbail-item .mask {
+	position: absolute;
+	left: 0px;
+	top: 0px;
+	text-align: center;
+	width: 200px;
+	height: 150px;
+	background-color: rgba(0, 0, 0, 0.50);
+	opacity: 0;
+	transition: all 0.2s ease 0s;
+}
+
+
+/* .thumbail-item:hover .mask {
+	opacity: 50;
+} */
+
+.thumbail-item:hover .toolbar {
+/* 	height: 25px; */
+   display : block ;
+}
+
+.thumbail-item .mask .inner {
+	margin: 0px auto;
+	line-height : 150px;
+}
+
+.thumbail-item .mask .inner i {
+	font-size: 16px;
+	cursor: pointer;
+	margin: 5px 1px;
+}
+
+.thumbail-item .mask .inner i:hover {
+	color: #176785;
+}
+
+.thumbail-item .toolbar {
+	position: absolute;
+	width: 200px;
+	height: 25px;
+	line-height: 25px;
+	bottom: 3px;
+	left: 0px;
+	background-color: rgba(0, 0, 0, 0.5);
+	/* transition: all 0.2s ease 0s; */
+	display : none ;
+}
+
+.thumbail-item .toolbar .left {
+	float: left;
+	margin-left: 5px;
+	font-size: 12px;
+	overflow: hidden;
+	white-space: nowrap;
+	text-overflow: ellipsis;
+	width: 100px;
+}
+
+.thumbail-item .toolbar .right {
+	float: right;
+	margin-right: 5px;
+}
+
+.thumbail-item .toolbar .right i {
+	cursor: pointer;
+	margin: 0px 2px;
+}
+
+.thumbail-item .toolbar .right i:hover {
+	color: orange;
+}
+
+.thumbail-item  .tags {
+	display: inline-block;
+	position: absolute;
+	bottom: 5px;
+	right: 1px;
+	background-color: transparent;
+	direction: rtl; /*鏂囨。娴佸儚*/
+	font-size: 11px;
+}
+
+.thumbail-item .tags .tag {
+	background-color: rgba(41, 128, 185, 0.8);
+	display: table;
+	margin: 1px 0px 0px;
+	padding: 2px;
+	margin: 2px 0px;
+	text-align: center;
+	direction: ltr;
+}
+
+.thumbail-item .tags .tag:hover {
+	transform: translateX(-5px);
+}
+
+.thumbail-item .tags .tag-info {
+	background-color: rgba(41, 128, 185, 0.8);
+}
+
+.thumbail-item .tags .tag-success {
+	background-color: rgba(39, 174, 96, 0.8);
+}
+
+.thumbail-item .tags .tag-warning {
+	background-color: rgba(230, 126, 34, 0.8);
+}
+
+.thumbail-item .tags .tag-danger {
+	background-color: rgba(231, 76, 60, 0.8);
+}
+
+.pd{
+	width : 0;
+	position : absolute ;
+	top : 0px ;
+	left : 0px ;
+	background-color: #E67E22;
+	background-image: linear-gradient(to right,  #E67E22, #D35400);
+	height: 2px;
+	-moz-box-shadow: 0 0 3px 0 #D35400;
+	-webkit-box-shadow: 0 0 3px 0 #D35400;
+	box-shadow: 0 0 3px 0 #D35400;
+	text-align: right;
+}
+
+.pd .pd-numnber { 
+	font-size : 10px ;
+	padding-right : 2px;
+}

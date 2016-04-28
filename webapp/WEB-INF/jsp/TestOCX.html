@@ -1,0 +1,474 @@
+<!doctype html>
+<html lang="en">
+ <head>
+  <meta charset="UTF-8">
+  <meta name="Generator" content="EditPlus®">
+  <meta name="Author" content="">
+  <meta name="Keywords" content="">
+  <meta name="Description" content="">
+  <title>Document</title>
+ </head>
+ <script type="text/javascript">
+ var globalOcxPlayer = null;
+ var lTalkHandle = -1;
+ 
+ function unload(){
+ 	//alert("unload");
+ 		//Delete();
+ 	}
+ 	
+ 	function unbeforeload(){
+ 			Delete();
+ 	}	
+ 
+ function load(){
+	globalOcxPlayer = document.getElementById('regOcxDiv');
+							globalOcxPlayer.style.display = "block";
+							globalOcxPlayer.RegJsFunctionCallback(_onOcxEventProxy);    //注册回调
+							
+							var data = {};
+							
+							data.action = 'InitDeviceSdk';                                         //初始化
+							var str = JSON.stringify(data);
+							globalOcxPlayer.GS_ReplayFunc(str);
+							
+	globalOcxPlayer1 = document.getElementById('regOcxDiv1');
+							globalOcxPlayer1.style.display = "block";
+							globalOcxPlayer1.RegJsFunctionCallback(_onOcxEventProxy);    //注册回调
+							
+							var data = {};
+							
+							data.action = 'InitDeviceSdk';                                         //初始化
+							var str = JSON.stringify(data);
+							globalOcxPlayer1.GS_ReplayFunc(str);
+											
+ }
+function _onOcxEventProxy(data){		//回调入口函数
+		//alert(data);
+		
+		document.getElementById('msg').innerHTML = document.getElementById('msg').innerHTML + data+"</br></br>";
+}
+function clearText(){
+		document.getElementById('msg').innerText = "";
+}
+
+//1-为实时视频；2-为录像
+var g_ViewMode = 0
+function CreateRealTime() {
+    if (globalOcxPlayer == null) {
+        alert("提示:控件未加载", "提示");
+        return;
+    }
+
+    if (g_ViewMode == 1) {
+        alert("实时视图已经创建", "提示!");
+        return;
+    }
+
+    if (g_ViewMode == 2) {
+        alert("已经创建录像视图，如果要测试实时请重新打开浏览器", "提示!");
+        return;
+    }
+    
+    g_ViewMode = 1;
+
+    var data = {};
+
+    data = {};
+    data.action = 'InitPara';                                         //设置视图标识，作为每个视图回调事件的标识
+    data['arguments'] = {};
+    data['arguments']['ocxID'] = "RealTimeView";//用户自定义
+    var str = JSON.stringify(data);
+    globalOcxPlayer.GS_RealTimeFunc(str);
+	globalOcxPlayer1.GS_RealTimeFunc(str);
+
+    data = {};
+    data.action = 'SetConfigParam';                                         //设置视图标识，作为每个视图回调事件的标识
+    data['arguments'] = {};
+    data['arguments']['captureSavePath'] = "c:\\capture"; //抓图保存路径
+    data['arguments']['savePath'] = "c:\\Record"; //录像下载跟本地录像保存路径
+    var str = JSON.stringify(data);
+    globalOcxPlayer.GS_RealTimeFunc(str);
+    globalOcxPlayer1.GS_RealTimeFunc(str);
+	
+    data = {};
+    data.action = 'InitMonitorWnd';                                         //创建实时视图
+    data['arguments'] = {};
+    data['arguments']['nDefaultSplit'] = 1;
+    data['arguments']['nMaxSplit'] = 4;
+    var str = JSON.stringify(data);
+    globalOcxPlayer.GS_RealTimeFunc(str);
+	globalOcxPlayer1.GS_RealTimeFunc(str);
+
+}
+
+//创建录像视图
+function CreateRePlay() {
+    if (globalOcxPlayer == null) {
+        alert("提示:控件未加载", "控件未加载!");
+        return;
+    }
+
+    if (g_ViewMode == 2) {
+        alert("录像视图已经创建", "提示!");
+        return;
+    }
+
+    if (g_ViewMode == 1) {
+        alert("已经创建实时视图，如果要测试录像请重新打开浏览器", "提示!");
+        return;
+    }
+    
+    g_ViewMode = 2;
+
+    var data = {};
+
+    data = {};
+    data.action = 'InitPara';                                         //设置视图标识，作为每个视图回调事件的标识
+    data['arguments'] = {};
+    data['arguments']['ocxID'] = "ReplayView"; //用户自定义
+    var str = JSON.stringify(data);
+    globalOcxPlayer.GS_RealTimeFunc(str);
+    
+    data = {};
+    data.action = 'InitReplayWnd';                                         //创建录像视图
+    data['arguments'] = {};
+    data['arguments']['nDefaultSplit'] = 1;
+    data['arguments']['nMaxSplit'] = 4;
+    var str = JSON.stringify(data);
+    globalOcxPlayer.GS_ReplayFunc(str);
+
+    data = {};
+    data.action = 'SetReplayWindowStyle';                                  //隐藏录像播放控制条
+    data['arguments'] = {};
+    data['arguments']['nIndex'] = 1;
+
+    var str = JSON.stringify(data);
+    globalOcxPlayer.GS_ReplayFunc(str);
+
+//     data = {};
+//     data.action = 'SetViewFlag';                                  				//设置录像视图类型标识
+//     data['arguments'] = {};
+//     data['arguments']['nViewMode'] = 2;
+//     data['arguments']['nViewType'] = 4;
+// 
+//     var str = JSON.stringify(data);
+//     globalOcxPlayer.GS_ReplayFunc(str);	
+
+}
+//登录SS服务
+function LoadSS(){
+	if(globalOcxPlayer == null){
+		alert("提示:控件未加载","控件未加载!");
+		return ;
+	}
+
+	var data = {};
+	data = {};
+	if (g_ViewMode == 1) {
+	    data.action = 'Login_SSServer';
+	    data['arguments'] = {};
+	    data['arguments']['strIp'] = "192.168.21.51";
+	    data['arguments']['userName'] = "admin";
+	    data['arguments']['passWord'] = "admin";
+	    data['arguments']['nPort'] = 10086;
+	    var str = JSON.stringify(data);
+	    var ret = globalOcxPlayer.GS_RealTimeFunc(str);
+		//var ret = globalOcxPlayer1.GS_RealTimeFunc(str);
+	    ret = eval('(' + ret + ')');
+	    if (ret.code != 0) {
+	        alert("登录失败,错误码:" + ret.code, "提示");
+	        return;
+	    }
+
+	    alert("登录SS服务成功", "登录SS成功");
+	}
+	else {
+	    data.action = 'Login_VodServer';
+	    data['arguments'] = {};
+	    data['arguments']['strIp'] = "192.168.15.20";
+	    data['arguments']['userName'] = "admin";
+	    data['arguments']['passWord'] = "admin";
+	    data['arguments']['nPort'] = 10100;
+	    var str = JSON.stringify(data);
+	    var ret = globalOcxPlayer.GS_ReplayFunc(str);
+		//var ret = globalOcxPlayer1.GS_RealTimeFunc(str);
+	    ret = eval('(' + ret + ')');
+	    if (ret.code != 0) {
+	        alert("提示", "登录失败,错误码:" + ret.code);
+	        return;
+	    }
+
+	    alert("登录VODS成功", "登录VODS成功");
+	}
+}
+
+//分屏4
+function SplitFourWnd(){
+	if(globalOcxPlayer == null){
+		alert("提示","控件未加载!");
+		return ;
+	}
+	
+	var data = {};
+	data = {};
+	if (g_ViewMode == 1) {
+	    data.action = 'ChangeLiveDispSplit';
+	    data['arguments'] = {};
+	    data['arguments']['nDispSplit'] = 4;
+	    var str = JSON.stringify(data);
+	    globalOcxPlayer.GS_RealTimeFunc(str);
+	}
+	else {
+	    data.action = 'ChangeReplayDispSplit';
+	    data['arguments'] = {};
+	    data['arguments']['nDispSplit'] = 4;
+	    var str = JSON.stringify(data);
+	    globalOcxPlayer.GS_ReplayFunc(str);
+	}
+}
+
+//分屏1
+function SplitOneWnd(){
+	if(globalOcxPlayer == null){
+		alert("提示","控件未加载!");
+		return ;
+	}
+
+	var data = {};
+	data = {};
+	if (g_ViewMode == 1) {
+	    data.action = 'ChangeLiveDispSplit';
+	    data['arguments'] = {};
+	    data['arguments']['nDispSplit'] = 1;
+	    var str = JSON.stringify(data);
+	    globalOcxPlayer.GS_RealTimeFunc(str);
+	}
+	else {
+	    data.action = 'ChangeReplayDispSplit';
+	    data['arguments'] = {};
+	    data['arguments']['nDispSplit'] = 1;
+	    var str = JSON.stringify(data);
+	    globalOcxPlayer.GS_ReplayFunc(str);
+	}
+}
+
+//播放视频
+function PlayRec(){
+	if(globalOcxPlayer == null){
+		alert("提示","控件未加载!");
+		return ;
+	}
+
+	var data = {};
+	data = {};
+	if (g_ViewMode == 1) {
+	    data.action = 'PlayRealVideo';
+	    data['arguments'] = {};
+	    data['arguments']['szDevID'] = "9527";
+	    data['arguments']['nStreamType'] = 1;
+	    data['arguments']['nDevType'] = 150001;
+	    data['arguments']['nIndex'] = -1;   //填写-1默认选择空闲窗口
+	    var str = JSON.stringify(data);
+	    globalOcxPlayer.GS_RealTimeFunc(str);
+		globalOcxPlayer1.GS_RealTimeFunc(str);
+	}
+	else {
+	    data.action = 'Replay_Ex';
+	    data['arguments'] = {};
+	    data['arguments']['recordUrl'] = "local://E:/2015-12-08-10-28-27#2015-12-08-10-30-54.gmf";
+	    data['arguments']['szStartTime'] = "2015-12-08-10-28-27";
+	    data['arguments']['szEndTime'] = "2015-12-08-10-30-54";
+	    data['arguments']['nIndex'] = -1;   //填写-1默认选择空闲窗口
+	    var str = JSON.stringify(data);
+	    globalOcxPlayer.GS_ReplayFunc(str);
+		globalOcxPlayer1.GS_ReplayFunc(str);
+	}
+}
+
+//关闭视频
+function StopRec() {
+    if (globalOcxPlayer == null) {
+        alert("提示", "控件未加载!");
+        return;
+    }
+
+    var data = {};
+    data = {};
+    if (g_ViewMode == 1) {
+
+        if (lTalkHandle != -1) {
+            data.action = 'StopTalk';
+            data['arguments'] = {};
+            data['arguments']['lHandle'] = lTalkHandle;
+            var str = JSON.stringify(data);
+            globalOcxPlayer.GS_RealTimeFunc(str);
+
+            lTalkHandle = -1;
+        }
+
+        data = {};
+        data.action = 'CloseRealVideo';
+        data['arguments'] = {};
+        data['arguments']['nIndex'] = -1;
+        var str = JSON.stringify(data);
+        globalOcxPlayer.GS_RealTimeFunc(str);
+    }
+    else {
+        data.action = 'ReplayCtrl';
+        data['arguments'] = {};
+        data['arguments']['nCtrlType'] = 9;
+        data['arguments']['lParam'] = 0;
+        data['arguments']['wParam'] = 0;
+        data['arguments']['nIndex'] = 1;
+        var str = JSON.stringify(data);
+        globalOcxPlayer.GS_ReplayFunc(str);
+    }
+}
+
+//释放控件
+function Delete(){
+	if(globalOcxPlayer == null){
+		alert("提示","控件未加载!");
+		return ;
+	}
+	
+	var data = {};					
+	data = {};
+	data.action = 'Delete';
+	var str = JSON.stringify(data);                                         
+	globalOcxPlayer.GS_ReplayFunc(str);
+	
+	data = {};
+	data.action = 'LogOut';
+	var str = JSON.stringify(data);                                         
+	globalOcxPlayer.GS_ReplayFunc(str);
+}
+
+
+//开始对讲
+function StartTalk(){
+	if(globalOcxPlayer == null){
+		alert("提示","控件未加载!");
+		return ;
+	}
+
+// 	if (lTalkHandle != -1) {
+//	    alert("语音对讲已经启动!", "提示");
+//	    return;
+//	} 
+	
+	var data = {};					
+	data = {};
+	data.action = 'StartTalk';                                         
+	data['arguments'] = {};
+	data['arguments']['szDevID'] = "9527";
+	var str = JSON.stringify(data);
+	var strRet = globalOcxPlayer.GS_RealTimeFunc(str);
+	debugger
+	ret = eval('(' + strRet + ')');
+	lTalkHandle = ret.code;
+	if (lTalkHandle == -1) {
+	    alert("启动语音对讲失败!", "提示");
+	}
+}
+
+function StopTalk(){
+	if(globalOcxPlayer == null){
+		alert("控件未加载!","提示");
+		return ;
+	}
+	
+	if(lTalkHandle == -1){
+		alert("未开始语音对讲!","提示");
+		return ;
+	}
+	
+	var data = {};					
+	data = {};
+	data.action = 'StopTalk';                                         
+	data['arguments'] = {};
+	data['arguments']['lHandle'] = lTalkHandle;
+	var str = JSON.stringify(data);
+	globalOcxPlayer.GS_RealTimeFunc(str);
+	
+	lTalkHandle = -1;
+}
+
+function OpenSound() {
+    if (globalOcxPlayer == null) {
+        alert("控件未加载!", "提示");
+        return;
+    }
+
+    var data = {};
+    data = {};
+    data.action = 'SoundCtrl';
+    data['arguments'] = {};
+    data['arguments']['nIndex'] = 1;
+    data['arguments']['nCtrlType'] = 1; //0-打开声音；1-关闭声音
+    if (g_ViewMode == 1) {
+        data['arguments']['nVideoType'] = 1; //1-实时视频；2-远程录像；3-本地录像
+    }
+    else {
+        data['arguments']['nVideoType'] = 2; //1-实时视频；2-远程录像；3-本地录像
+    }
+    
+    var str = JSON.stringify(data);
+    globalOcxPlayer.GS_RealTimeFunc(str);
+}
+
+function CloseSound() {
+    if (globalOcxPlayer == null) {
+        alert("控件未加载!", "提示");
+        return;
+    }
+    var data = {};
+    data = {};
+    data.action = 'SoundCtrl';
+    data['arguments'] = {};
+    data['arguments']['nIndex'] = 1;
+    data['arguments']['nCtrlType'] = 0; //0-打开声音；1-关闭声音
+    if (g_ViewMode == 1) {
+        data['arguments']['nVideoType'] = 1; //1-实时视频；2-远程录像；3-本地录像
+    }
+    else {
+        data['arguments']['nVideoType'] = 2; //1-实时视频；2-远程录像；3-本地录像
+    }
+
+    var str = JSON.stringify(data);
+    globalOcxPlayer.GS_RealTimeFunc(str);
+}
+
+ </script>
+ <body onload="load()"  onunload ="unload()" onbeforeunload ="unbeforeload()">
+ 	<div style="float :left">
+  <object id="regOcxDiv" classid="clsid:455791d4-4095-4f70-b2b3-f5c424f25ad9" width="800" height="400"></object>
+  <object id="regOcxDiv1" classid="clsid:455791d4-4095-4f70-b2b3-f5c424f25ad9" width="800" height="400" display=false></object>
+
+  <div>
+    <input type="button" value="实时" onclick="CreateRealTime()"/>
+    <input type="button" value="录像" onclick="CreateRePlay()"/>
+	<input type="button" value="登录服务" onclick="LoadSS()"/>
+	<input type="button" value="1分屏" onclick="SplitOneWnd()"/>
+	<input type="button" value="4分屏" onclick="SplitFourWnd()"/>
+	<input type="button" value="释放控件" onclick="Delete()"/>
+  </div>
+    <div>
+	<input type="button" value="播放" onclick="PlayRec()"/>
+	<input type="button" value="停止" onclick="StopRec()"/>
+	<input type="button" value="打开声音" onclick="OpenSound()"/>
+	<input type="button" value="关闭声音" onclick="CloseSound()"/>
+  </div>
+   <div>
+	<input type="button" value="开始对讲" onclick="StartTalk()"/>
+	<input type="button" value="停止对讲" onclick="StopTalk()"/>
+  </div>
+  </div>
+   	<div style="float :left">
+ 			 <div id="msg"  style= "border :2px solid black;width:800px;height:500px;overflow:auto;">
+  	  </div>
+  	  <input type="button" value="清除" onclick="clearText()"/>
+  </div>
+ </body>
+</html>

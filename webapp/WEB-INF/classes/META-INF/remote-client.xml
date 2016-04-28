@@ -1,0 +1,54 @@
+<!DOCTYPE beans PUBLIC "-//SPRING//DTD BEAN//EN" "http://www.springframework.org/dtd/spring-beans.dtd">
+<beans>
+	<!-- 客户端Hessian代理工厂Bean -->
+	<bean id="privilegeService" class="org.springframework.remoting.caucho.HessianProxyFactoryBean">
+		<!-- 请求代理Servlet路径 -->		
+		<property name="serviceUrl">
+			<value>${sysmgr.url}/remote/privilegeService.remote</value>
+		</property>
+		<!-- 接口定义 -->
+		<property name="serviceInterface">
+			<value>com.gosun.service.privilege.IPrivilegeService</value>
+		</property>
+		<property name="overloadEnabled" value="true" />
+	</bean>
+	
+	<!-- 客户端Hessian代理工厂Bean -->
+	<bean id="sysOperationLogService" class="org.springframework.remoting.caucho.HessianProxyFactoryBean">
+		<!-- 请求代理Servlet路径 -->		
+		<property name="serviceUrl">
+			<value>${sysmgr.url}/remote/sysOperationLogService.remote</value>
+		</property>
+		<!-- 接口定义 -->
+		<property name="serviceInterface">
+			<value>com.gosun.service.log.ISysOperationLogService</value>
+		</property>
+		<property name="overloadEnabled" value="true" />
+	</bean>
+	
+	<!-- 客户端Hessian代理工厂Bean -->
+	<bean id="userService" class="org.springframework.remoting.caucho.HessianProxyFactoryBean">
+		<!-- 请求代理Servlet路径 -->		
+		<property name="serviceUrl">
+			<value>${sysmgr.url}/remote/userService.remote</value>
+		</property>
+		<!-- 接口定义 -->
+		<property name="serviceInterface">
+			<value>com.gosun.service.user.IUserService</value>
+		</property>
+		<property name="overloadEnabled" value="true" />
+	</bean>
+	
+	    <!-- 客户端Hessian代理工厂Bean -->
+	<bean id="orgService" class="org.springframework.remoting.caucho.HessianProxyFactoryBean">
+		<!-- 请求代理Servlet路径 -->		
+		<property name="serviceUrl">
+			<value>${sysmgr.url}/remote/orgService.remote</value>
+		</property>
+		<!-- 接口定义 -->
+		<property name="serviceInterface">
+			<value>com.gosun.service.org.IOrgService</value>
+		</property>
+		<property name="overloadEnabled" value="true" />
+	</bean>
+</beans>

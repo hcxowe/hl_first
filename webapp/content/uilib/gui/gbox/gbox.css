@@ -1,0 +1,134 @@
+@charset "UTF-8";
+
+.gbox {
+	border: 1px solid #858585;
+	font-family: 微软雅黑;
+	position: relative;
+	width: 400px;
+	background-color: #fff;
+}
+
+.gbox.no-border {
+	border: none;
+}
+.gbox  .dragable {
+   position : absolute ;
+   cursor : move ;
+}
+.gbox.shadow {
+	  box-shadow: 0 0 8px rgba(0, 0, 0, 0.1), 0 0 256px
+		rgba(255, 255, 255, 0.3);
+}
+
+.gbox .gheader {
+	border-bottom: 1px solid #858585;
+	min-height: 30px;
+	width: 100%;
+}
+
+.gbox .gheader .gtab { 
+	padding-left : 10px ;
+	display : inline-block ;
+}
+
+.gbox .gheader .gtab button {
+	background-color : #fff ;
+	border : none ;
+	padding : 5px; 
+	font-family : 微软雅黑;
+	outline : none ;
+	position : relative ;
+	bottom : -1px;
+	cursor : pointer ;
+}
+.gbox .gheader .gtab button:hover{
+	background-color : #F5F5F5
+}
+
+
+.gbox .gheader .gtab button.current{
+	border : 1px solid #858585 ;
+	z-index : 2 ;
+	border-bottom: 1px solid #fff ;
+	padding-bottom : 6px;
+}
+
+
+.gbox .gheader.no-header {
+	display: none;
+}
+
+.gbox .gheader span {
+	line-height: 30px;
+}
+
+.gbox .gheader .gtitle {
+	color: #000;
+	float: left;
+	font-size: 13px;
+	margin-left: 10px;
+}
+
+
+.gbox .gheader .gtool {
+	float: right;
+	margin-right: 10px;
+}
+
+.gbox .gheader .left {
+	float : left ;
+	margin-left: 10px;
+}
+
+.gbox .gheader .right {
+	float : right ;
+	margin-right: 10px;
+}
+
+.gbox .gheader .gtool span {
+	border-radius: 11px;
+	cursor: pointer;
+	margin-left: -5px;
+	padding: 2px 6px;
+}
+
+.gbox .gheader .gtool .gec {
+	font-size: 11px;
+	position: relative;
+	top: -1px;
+}
+
+.gbox .gheader .gtool span:hover {
+	background-color: #E8E8E8;
+}
+
+.gbox .gbody {
+	width: 100%;
+	min-height: 260px;
+}
+
+.gbox .gfooter {
+	border-top: 1px solid #858585;
+	bottom: 0;
+	position: absolute;
+	width: 100%;
+	clear: both;
+}
+
+.gbox .gfooter button {
+	border: none;
+	text-align: center;
+	background-color: #fff;
+	border: 1px solid #858585;
+	height: 30px;
+	float: right;
+	margin: 5px 0px;
+	margin-right: 15px;
+	cursor: pointer;
+	font-family: 微软雅黑;
+	outline: none;
+}
+
+.gbox .gfooter button:hover {
+	background-color: #F5F5F5;
+}

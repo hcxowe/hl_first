@@ -1,0 +1,344 @@
+@CHARSET "UTF-8";
+/**
+ * 按钮样式
+ * @author liuxg
+ */
+.gbtn{
+   font-size:13px;
+   font-family:微软雅黑;
+   cursor: pointer;
+   color:#fff;
+   border: 1px solid #4c8ce9;
+   background:  -moz-linear-gradient(top,#649ff4,#4784d8);
+   background:  -webkit-linear-gradient(top,#649ff4,#4784d8);
+   filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#649ff4', endColorstr='#4784d8');
+   border-radius: 2px ;
+   padding: 5px 15px ;
+   margin:0px;
+   outline : none ;
+}
+/* .gbtn:hover{
+  background-color: #316EA4;
+} */
+.gbtn .icon{
+  display: inline-block;
+  width:16px;
+  height:16px ;
+  vertical-align:-2px;
+  background: url('../icon/common/home.png') no-repeat  center ;
+}
+
+/**
+ * 无边框
+ */
+.gbtn-pure-no-border{
+  border : none ;
+  background : none ;
+  background-color:  #fff;
+  color:#333333;
+  padding:2px;
+}
+.gbtn-pure-no-border:hover{
+  background-color:  #E6E6E6;
+}
+
+.gbtn-pure-border{
+  background : none ;
+  background-color:  #fff;
+  border:1px solid #ccc ;
+  color:#333333;
+}
+.gbtn-pure-border:hover{
+  background-color:  #E6E6E6;
+  border: 1px solid #ADADAD;
+}
+.gbtn-success{
+  border : none ;
+  background : none ;
+  background-color:  #5CB85C;
+}
+.gbtn-success:hover{
+  background-color:  #449D44;
+}
+.gbtn-warning{
+  border : none ;
+  background : none ;
+  background-color:  #F0AD4E;
+}
+.gbtn-warning:hover{
+  background-color:  #EC971F;
+}
+.gbtn-danger{
+	border : none ;
+  background : none ;
+  background-color:  #D9534F;
+}
+.gbtn-danger:hover{
+  background-color:  #C9302C;
+}
+
+/**
+ * 一些图标
+ */
+/* common相关 */
+.gbtn .icon-search{
+  background: url('../icon/common/search.png') no-repeat center;
+}
+.gbtn .icon-common-add{
+  background: url('../icon/common/add.png') no-repeat center ;
+}
+.gbtn .icon-common-home{
+  background: url('../icon/common/home.png') no-repeat  center ;
+}
+.gbtn .icon-common-edit{
+  background: url('../icon/common/edit.png') no-repeat  center ;
+}
+.gbtn .icon-common-save{
+  background: url('../icon/common/save.png') no-repeat  center ;
+}
+.gbtn .icon-common-cancel{
+  background: url('../icon/common/cancel.png') no-repeat  center ;
+}
+.gbtn .icon-common-upload{
+  background: url('../icon/common/upload.png') no-repeat  center ;
+}
+.gbtn .icon-common-download{
+  background: url('../icon/common/download.png') no-repeat  center ;
+}
+.gbtn .icon-common-refresh{
+  background: url('../icon/common/refresh.png') no-repeat  center ;
+}
+.gbtn .icon-common-print{
+  background: url('../icon/common/print.png') no-repeat  center ;
+}
+.gbtn .icon-common-star-half{
+  background: url('../icon/common/star_half.png') no-repeat  center ;
+}
+.gbtn .icon-common-star{
+  background: url('../icon/common/star.png') no-repeat  center ;
+}
+.gbtn .icon-common-news{
+  background: url('../icon/common/news.png') no-repeat  center ;
+}
+.gbtn .icon-common-logout{
+  background: url('../icon/common/logout.png') no-repeat  center ;
+}
+
+/* file相关 */
+.gbtn .icon-file-right{
+  background: url('../icon/file/file-right.png') no-repeat  center ;
+}
+.gbtn .icon-file-add{
+  background: url('../icon/file/file-add.png') no-repeat  center ;
+}
+.gbtn .icon-file-del{
+  background: url('../icon/file/file-del.png') no-repeat  center ;
+}
+.gbtn .icon-file-detail{
+  background: url('../icon/file/file-detail.png') no-repeat  center ;
+}
+.gbtn .icon-file-search{
+  background: url('../icon/file/file-search.png') no-repeat  center ;
+}
+.gbtn .icon-file-set{
+  background: url('../icon/file/file-set.png') no-repeat  center ;
+}
+.gbtn .icon-file-edit{
+  background: url('../icon/file/file-edit.png') no-repeat  center ;
+}
+.gbtn .icon-file-copy{
+  background: url('../icon/file/file-copy.png') no-repeat  center ;
+}
+
+
+/* user相关 */
+.gbtn .icon-user-man{
+  background: url('../icon/user/user-man.png') no-repeat  center ;
+}
+.gbtn .icon-user-women{
+  background: url('../icon/user/user-women.png') no-repeat  center ;
+}
+
+.gbtn .icon-user-add{
+  background: url('../icon/user/user-add.png') no-repeat  center ;
+}
+.gbtn .icon-user-del{
+  background: url('../icon/user/user-del.png') no-repeat  center ;
+}
+
+.gbtn .icon-user-edit{
+  background: url('../icon/user/user-edit.png') no-repeat  center ;
+}
+
+.gbtn .icon-user-search{
+  background: url('../icon/user/user-search.png') no-repeat  center ;
+}
+
+.gbtn .icon-user-love{
+  background: url('../icon/user/user-love.png') no-repeat  center ;
+}
+
+.gbtn .icon-user-ok{
+  background: url('../icon/user/user-ok.png') no-repeat  center ;
+}
+
+.gbtn .icon-user-users{
+  background: url('../icon/user/user-users.png') no-repeat  center ;
+}
+
+.gbtn .icon-user-set{
+  background: url('../icon/user/user-set.png') no-repeat  center ;
+}
+
+
+/* car相关 */
+.gbtn .icon-car-add{
+  background: url('../icon/car/car-add.png') no-repeat  center ;
+}
+.gbtn .icon-car-del{
+  background: url('../icon/car/car-del.png') no-repeat  center ;
+}
+.gbtn .icon-car-edit{
+  background: url('../icon/car/car-edit.png') no-repeat  center ;
+}
+.gbtn .icon-car-onduty{
+  background: url('../icon/car/car-on-duty.png') no-repeat  center ;
+}
+
+.gbtn .icon-car-notduty{
+  background: url('../icon/car/car-not-duty.png') no-repeat  center ;
+}
+
+
+/* form相关 */
+.gbtn .icon-gform-location{
+  background: url('../icon/form/location.png') no-repeat  center ;
+}
+
+.gbtn .icon-gform-search{
+  background: url('../icon/form/search.png') no-repeat  center ;
+}
+
+.gbtn .icon-gform-date{
+	padding-left:2px;
+  background: url('../icon/form/date.png') no-repeat  center ;
+}
+
+/* monitor相关 */
+.gbtn .icon-monitor-add{
+  background: url('../icon/monitor/monitor-add.png') no-repeat  center ;
+}
+
+.gbtn .icon-monitor-edit{
+  background: url('../icon/monitor/monitor-edit.png') no-repeat  center ;
+}
+
+.gbtn .icon-monitor-del{
+  background: url('../icon/monitor/monitor-del.png') no-repeat  center ;
+}
+
+.gbtn .icon-custom-down{
+  background: url('../icon/custom/down.png') no-repeat  center ;
+}
+/* bar相关 */
+.gbtn .icon-bar-bar{
+  background: url('../icon/bar/bar.png') no-repeat  center ;
+}
+.gbtn .icon-bar-chart{
+  background: url('../icon/bar/chart.png') no-repeat  center ;
+}
+.gbtn .icon-bar-add{
+  background: url('../icon/bar/bar-add.png') no-repeat  center ;
+}
+.gbtn .icon-bar-edit{
+  background: url('../icon/bar/bar-edit.png') no-repeat  center ;
+}
+.gbtn .icon-bar-delete{
+  background: url('../icon/bar/bar-delete.png') no-repeat  center ;
+}
+.gbtn .icon-bar-link{
+  background: url('../icon/bar/bar-link.png') no-repeat  center ;
+}
+.gbtn .icon-bar-warm{
+  background: url('../icon/bar/bar-warm.png') no-repeat  center ;
+}
+
+/* phone相关 */
+.gbtn .icon-phone-add{
+  background: url('../icon/phone/phone-add.png') no-repeat  center ;
+}
+
+.gbtn .icon-phone-edit{
+  background: url('../icon/phone/phone-edit.png') no-repeat  center ;
+}
+
+.gbtn .icon-phone-del{
+  background: url('../icon/phone/phone-del.png') no-repeat  center ;
+}
+
+.gbtn .icon-phone-online{
+  background: url('../icon/phone/phone_online.png') no-repeat  center ;
+}
+
+.gbtn .icon-phone-offline{
+  background: url('../icon/phone/phone-offline.png') no-repeat  center ;
+}
+
+/* map相关 */
+.gbtn .icon-map{
+  background: url('../icon/map/map.png') no-repeat  center ;
+}
+.gbtn .icon-map-detail{
+  background: url('../icon/map/map-detail.png') no-repeat  center ;
+}
+.gbtn .icon-map-add{
+  background: url('../icon/map/map-add.png') no-repeat  center ;
+}
+.gbtn .icon-map-edit{
+  background: url('../icon/map/map-edit.png') no-repeat  center ;
+}
+.gbtn .icon-map-delete{
+  background: url('../icon/map/map-delete.png') no-repeat  center ;
+}
+.gbtn .icon-map-search{
+  background: url('../icon/map/map-search.png') no-repeat  center ;
+}
+.gbtn .icon-map-locate{
+  background: url('../icon/map/map-locate.png') no-repeat  center ;	
+}
+.gbtn .icon-map-fence{
+  background: url('../icon/map/map-fence.png') no-repeat  center ;	
+}
+.gbtn .icon-map-patrol{
+  background: url('../icon/map/map-patrol.png') no-repeat  center ;	
+}
+
+/* date相关 */
+.gbtn .icon-date-add{
+  background: url('../icon/date/date-add.png') no-repeat  center ;	
+}
+.gbtn .icon-date-edit{
+  background: url('../icon/date/date-edit.png') no-repeat  center ;	
+}
+.gbtn .icon-date-delete{
+  background: url('../icon/date/date-delete.png') no-repeat  center ;	
+}
+.gbtn .icon-date-ok{
+  background: url('../icon/date/date-ok.png') no-repeat  center ;	
+}
+/*色块 */
+.fa.info{
+	color : #428BCA
+}
+.fa.success{
+	color : #5CB85C
+}
+.fa.warning{
+	color : #F39C12
+}
+.fa.danger{
+	color : #D9534F
+}
+.fa.wounded{
+	color : #8E44AD
+}

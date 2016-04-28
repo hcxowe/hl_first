@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans 
+    xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:jee="http://www.springframework.org/schema/jee"
+	xmlns:tx="http://www.springframework.org/schema/tx"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:aop="http://www.springframework.org/schema/aop"
+	default-lazy-init="false"
+	xsi:schemaLocation="
+	    http://www.springframework.org/schema/jee 
+		http://www.springframework.org/schema/jee/spring-jee.xsd
+		http://www.springframework.org/schema/aop 
+		http://www.springframework.org/schema/aop/spring-aop.xsd
+		http://www.springframework.org/schema/beans 
+		http://www.springframework.org/schema/beans/spring-beans.xsd
+		http://www.springframework.org/schema/tx 
+		http://www.springframework.org/schema/tx/spring-tx.xsd
+		http://www.springframework.org/schema/context 
+		http://www.springframework.org/schema/context/spring-context.xsd">
+		
+	<!-- 定时任务 -->
+	 <bean id="jobDetail" class="org.springframework.scheduling.quartz.JobDetailFactoryBean">
+        <!-- durability 表示任务完成之后是否依然保留到数据库，默认false   -->
+        <property name="durability" value="true" />  
+        <property name="jobClass" value="com.goldmsg.gmrtc.job.JobTest"></property>
+    </bean>
+    
+    <bean id="cornTrigger" class="org.springframework.scheduling.quartz.CronTriggerFactoryBean">
+       <property name="jobDetail" ref="jobDetail"/>
+       <!-- 调度工厂实例化后，经过0秒开始执行调度 -->
+       <property name="startDelay" value="0" />
+       <!-- 每隔3分钟触发一次 -->
+       <property name="cronExpression" value="0 0/1 * * * ?"/>
+    </bean> 
+    
+    <!-- 定义核心调度器 -->
+    <bean id="scheduler" class="org.springframework.scheduling.quartz.SchedulerFactoryBean">
+      <property name="triggers">
+        <ref bean="cornTrigger"/>
+      </property>
+    </bean>
+</beans>

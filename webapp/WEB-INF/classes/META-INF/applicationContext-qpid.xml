@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans 
+   xmlns="http://www.springframework.org/schema/beans"
+   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+   xmlns:tx="http://www.springframework.org/schema/tx"
+   xmlns:p="http://www.springframework.org/schema/p"
+   xmlns:jpa="http://www.springframework.org/schema/data/jpa"
+   xmlns:context="http://www.springframework.org/schema/context" 
+   xmlns:aop="http://www.springframework.org/schema/aop"
+   xsi:schemaLocation="
+        http://www.springframework.org/schema/beans 
+   		http://www.springframework.org/schema/beans/spring-beans.xsd
+   		http://www.springframework.org/schema/aop
+   		http://www.springframework.org/schema/aop/spring-aop.xsd
+   		http://www.springframework.org/schema/context 
+   		http://www.springframework.org/schema/context/spring-context.xsd 
+   		http://www.springframework.org/schema/tx 
+	    http://www.springframework.org/schema/tx/spring-tx.xsd 
+     	http://www.springframework.org/schema/data/jpa 
+     	http://www.springframework.org/schema/data/jpa/spring-jpa.xsd">
+
+	<!-- Spring提供的JMS工具类，它可以进行消息发送、接收等 -->
+    <bean id="jmsTemplate" class="org.springframework.jms.core.JmsTemplate">  
+        <property name="connectionFactory" ref="jQpidConnectionFactory"/>  
+    </bean>
+
+	<bean id="jQpidConnectionFactory" class="org.apache.qpid.client.AMQConnectionFactory">
+		<constructor-arg index="0" value="amqp://guest:guest@test/?brokerlist='tcp://192.168.21.163:5673'" />
+	</bean>
+
+	<bean id="jCachingConnectionFactory" class="org.springframework.jms.connection.CachingConnectionFactory">
+		<property name="targetConnectionFactory" ref="jQpidConnectionFactory" />
+		<property name="sessionCacheSize" value="1" />
+		<property name="reconnectOnException" value="true" />
+	</bean>
+
+	<bean id="deviceStatusDestination" class="org.apache.qpid.client.AMQAnyDestination">
+		<constructor-arg index="0" value="C3M:DEVICE_STATUS; {create:always,assert:always,node:{type:topic,durable:true,x-declare:{exclusive:true,auto-delete:true}}}" />
+	</bean>
+
+	<bean id="deviceStatusReceiver" class="com.goldmsg.gmrtc.qpid.DeviceStatusReceiver" />
+
+	<bean id="deviceStatusContainer"
+		class="org.springframework.jms.listener.DefaultMessageListenerContainer">
+		<property name="connectionFactory" ref="jCachingConnectionFactory" />
+		<property name="exceptionListener" ref="jCachingConnectionFactory" />
+		<property name="messageListener" ref="deviceStatusReceiver" />
+		<property name="concurrentConsumers" value="1" />
+		<property name="autoStartup" value="true" />
+		<property name="destination" ref="deviceStatusDestination" />
+		<property name="recoveryInterval" value="10000" />
+	</bean>
+	
+</beans>

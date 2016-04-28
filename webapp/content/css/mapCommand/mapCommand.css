@@ -1,0 +1,96 @@
+@CHARSET "UTF-8";
+html,body{
+	margin:0px;
+	height:100%;
+	min-width: 1200px;
+	font-family:Microsoft Yahei;
+}
+
+#myTab{
+	width: 50px; 
+	float: left;
+	background-color: #0078D7;
+}
+
+#myTab > li{
+	margin-top: 2px;
+	margin-bottom: 2px;
+}
+
+#myTab > li > a{
+	width: 46px;
+	height: 51px;
+	padding: 0px;
+}
+
+#myTab > li > a:hover, #myTab > li.active > a{
+	background-color: #bce3ff;
+}
+
+#myTab > li > a > div{
+	width: 46px;
+	height: 51px;
+}
+
+#myTab > li > a.a-camera div{
+	background-image: url(../../images/mapCommand/icon1.png);
+}
+
+#myTab > li.active > a.a-camera > div, 
+#myTab > li > a.a-camera:hover > div{
+	background-image: url(../../images/mapCommand/icon1_0.png);
+}
+
+#myTab > li > a.a-police div{
+	background-image: url(../../images/mapCommand/icon2.png);
+}
+
+#myTab > li.active > a.a-police > div, 
+#myTab > li > a.a-police:hover > div{
+	background-image: url(../../images/mapCommand/icon2_0.png);
+}
+
+#myTab > li > a.a-dingzi div{
+	background-image: url(../../images/mapCommand/icon3.png);
+}
+
+#myTab > li.active > a.a-dingzi > div, 
+#myTab > li > a.a-dingzi:hover > div{
+	background-image: url(../../images/mapCommand/icon3_0.png);
+}
+
+#myTab > li > a.a-smallcar div{
+	background-image: url(../../images/mapCommand/icon4.png);
+}
+
+#myTab > li.active > a.a-smallcar > div, 
+#myTab > li > a.a-smallcar:hover > div{
+	background-image: url(../../images/mapCommand/icon4_0.png);
+}
+
+#myTab > li > a.a-4g div{
+	background-image: url(../../images/mapCommand/icon5.png);
+}
+
+#myTab > li.active > a.a-4g > div, 
+#myTab > li > a.a-4g:hover > div{
+	background-image: url(../../images/mapCommand/icon5_0.png);
+}
+
+#myTab > li > a.a-bigcar div{
+	background-image: url(../../images/mapCommand/icon6.png);
+}
+
+#myTab > li.active > a.a-bigcar > div, 
+#myTab > li > a.a-bigcar:hover > div{
+	background-image: url(../../images/mapCommand/icon6_0.png);
+}
+
+#myTab > li > a.a-search div{
+	background-image: url(../../images/mapCommand/icon7.png);
+}
+
+#myTab > li.active > a.a-search > div, 
+#myTab > li > a.a-search:hover > div{
+	background-image: url(../../images/mapCommand/icon7_0.png);
+}

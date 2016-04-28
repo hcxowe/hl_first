@@ -1,0 +1,117 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+			xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:tx="http://www.springframework.org/schema/tx"
+			xmlns:p="http://www.springframework.org/schema/p" xmlns:jpa="http://www.springframework.org/schema/data/jpa"
+			xmlns:context="http://www.springframework.org/schema/context"
+			xmlns:aop="http://www.springframework.org/schema/aop" xmlns:dubbo="http://code.alibabatech.com/schema/dubbo"
+			xsi:schemaLocation="
+        http://www.springframework.org/schema/beans 
+   		http://www.springframework.org/schema/beans/spring-beans.xsd
+   		http://www.springframework.org/schema/aop
+   		http://www.springframework.org/schema/aop/spring-aop.xsd
+   		http://www.springframework.org/schema/context 
+   		http://www.springframework.org/schema/context/spring-context.xsd 
+   		http://www.springframework.org/schema/tx 
+	    http://www.springframework.org/schema/tx/spring-tx.xsd 
+     	http://www.springframework.org/schema/data/jpa 
+     	http://www.springframework.org/schema/data/jpa/spring-jpa.xsd
+     	http://code.alibabatech.com/schema/dubbo         
+     	http://code.alibabatech.com/schema/dubbo/dubbo.xsd">
+			<!-- Spring的配置文件 -->
+			<!-- 扫描repository包，创建代理接口实例,将带有注解的类纳入spring容器管理 -->
+			<context:component-scan base-package="com.goldmsg.gmrtc" />
+			<context:component-scan base-package="com.gosun.core" />
+
+			<!-- 读取资源文件 ，引入配置文件 -->
+			<bean id="pros"
+						class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
+						<property name="location" value="classpath:application.properties" />
+			</bean>
+
+			<bean id="propertiesReader"
+						class="org.springframework.beans.factory.config.PropertiesFactoryBean">
+						<property name="locations">
+									<list>
+												<value>classpath:application.properties</value>
+									</list>
+						</property>
+			</bean>
+
+			<!-- 文件上传配置 -->
+			<bean id="multipartResolver"
+						class="org.springframework.web.multipart.commons.CommonsMultipartResolver">
+						<!-- one of the properties available; the maximum file size in bytes -->
+						<property name="defaultEncoding" value="UTF-8" />
+						<property name="maxUploadSize" value="10000000" />
+			</bean>
+
+			<!-- 数据源配置 -->
+			<bean id="dataSource" class="com.alibaba.druid.pool.DruidDataSource"
+						destroy-method="close">
+						<!-- 基本属性 url、user、password -->
+						<property name="url" value="${jdbc.url}" />
+						<property name="username" value="${jdbc.username}" />
+						<property name="password" value="${jdbc.password}" />
+
+						<!-- 配置监控统计拦截的filters -->
+						<property name="filters" value="stat" />
+
+						<!-- 配置初始化大小、最小、最大 -->
+						<property name="initialSize" value="1" />
+						<property name="minIdle" value="1" />
+						<property name="maxActive" value="20" />
+
+						<!-- 配置获取连接等待超时的时间 -->
+						<property name="maxWait" value="60000" />
+
+						<!-- 配置间隔多久才进行一次检测，检测需要关闭的空闲连接，单位是毫秒 -->
+						<property name="timeBetweenEvictionRunsMillis" value="60000" />
+
+						<!-- 配置一个连接在池中最小生存的时间，单位是毫秒 -->
+						<property name="minEvictableIdleTimeMillis" value="300000" />
+
+						<property name="validationQuery" value="SELECT 'x'" />
+						<property name="testWhileIdle" value="true" />
+						<property name="testOnBorrow" value="false" />
+						<property name="testOnReturn" value="false" />
+
+						<!-- 打开PSCache，并且指定每个连接上PSCache的大小 -->
+						<property name="poolPreparedStatements" value="false" />
+						<property name="maxPoolPreparedStatementPerConnectionSize"
+									value="20" />
+			</bean>
+
+			<!-- 配置事务管理器 -->
+			<bean id="transactionManager" class="org.springframework.orm.jpa.JpaTransactionManager">
+						<property name="entityManagerFactory" ref="entityManagerFactory" />
+			</bean>
+
+			<!-- 定义实体管理器工厂 -->
+			<bean id="entityManagerFactory"
+						class="org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean">
+						<property name="dataSource" ref="dataSource" />
+						<property name="persistenceUnitName" value="springJpa" />
+			</bean>
+
+			<!-- 启用 annotation事务 -->
+			<tx:annotation-driven transaction-manager="transactionManager" />
+
+			<!-- 配置Spring Data JPA扫描目录 -->
+			<jpa:repositories base-package="com.goldmsg.gmrtc.repository"
+						repository-impl-postfix="Impl" entity-manager-factory-ref="entityManagerFactory"
+						transaction-manager-ref="transactionManager" />
+			<!-- 消费方应用名，用于计算依赖关系，不是匹配条件，不要与提供方一样 -->
+			<dubbo:application name="gps-repository" />
+			<!--使用ZooKeeper注册中心暴露服务地址 -->
+			<dubbo:registry address="zookeeper://192.168.21.51:2181?client=zkclient" />
+			<!--生成远程服务代理，可以和本地bean一样使用demoService -->
+			<dubbo:reference id="gpsService"
+						interface="com.goldmsg.dass.device.GpsService" />
+			<dubbo:reference id="mediaService"
+						interface="com.goldmsg.dass.device.MediaService" />
+			<bean id="springUtil" class="com.goldmsg.gmrtc.utils.SpringContextUtils"/>
+ 			<bean id="deviceInfoHandler" class="com.goldmsg.gmrtc.qpid.DeviceInfoHandler"/>
+			<bean id="qpidService" class="com.goldmsg.gmrtc.qpid.QpidService">
+			    <property name="handler" ref="deviceInfoHandler"></property>
+			</bean>
+</beans>

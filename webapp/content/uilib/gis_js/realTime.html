@@ -1,0 +1,440 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta name="viewport" content="initial-scale=1, maximum-scale=1,user-scalable=no"/>
+    <link rel="stylesheet" href="http://192.168.21.20:8088/jsapi/3.14/dijit/themes/claro/claro.css">
+    <link rel="stylesheet" href="http://192.168.21.20:8088/jsapi/3.14/esri/css/esri.css">
+    <style type="text/css">
+        body, html,#mapDiv {width: 100%;height: 100%;overflow: hidden;margin:0;font-family:"微软雅黑";}
+    </style>
+</head>
+<body>
+    <script type="text/javascript" src="config.js"></script>
+    <script src="http://192.168.21.20:8088/jsapi/3.14/init.js"></script>
+    <div id="mapDiv"></div>
+    <OBJECT id="Mymic" width="0" height="0" CLASSID="CLSID:4A1C35F4-690C-4D62-B7ED-C9715FDC1D70" TYPE="application/oleobject"> </OBJECT>
+    <script type="text/javascript">
+    dojo.require("extras.MapInitObject");
+    var GisObject;
+    dojo.ready(function(){
+        GisObject = new extras.MapInitObject("mapDiv");
+        var tmpPoint = new esri.geometry.Point(defaultPoint[0], defaultPoint[1]);
+        GisObject.setMapOptions({
+            logo:false,
+            extent : "12557877.595482401,2596928.9267310356,12723134.450635016,2688653.360673282",
+            level:defaultPoint[2],
+            center:tmpPoint
+        });
+        
+        GisObject.addDefaultLayers();
+    });
+
+    var markerArr = new Array;//标签数组
+    var labelArr = new Array;//文本数组
+    var ocxobj;
+    var serverIP = "";
+    var serverPort = "";
+
+    try{
+        var ocx=document.getElementById('Mymic'); 
+        if(  ocx.object== null )
+        {   
+            var pageHost = ((document.location.protocol == "https:") ? "https://" : "http://");
+            document.getElementById("mapDiv").innerHTML = "<a href='autoenv.zip'>点击下载实时指挥安装包</a>";
+            alert("请先下载安装实时指挥安装包并允许浏览器进行加载");   
+        }  
+        else
+        {
+            
+        }
+    }catch(e){
+        var pageHost = ((document.location.protocol == "https:") ? "https://" : "http://");
+        document.getElementById("mapDiv").innerHTML = "<a href='autoenv.zip'>点击下载实时指挥安装包</a>";
+        alert("请先下载安装实时指挥安装包");
+    }
+     
+     //设置服务器IP和端口号       
+    function setServerPort(data){
+        serverIP = data[0].ip;
+        serverPort = data[0].port;
+    }
+
+    //清除覆盖物
+    function remove_overlay(){
+        GisObject.toolbar.drawLayer.clear();
+        markerArr.splice(0,markerArr.length);
+        labelArr.splice(0,labelArr.length)
+    }
+
+    var first = true;
+
+    function createMarker(data)
+    {
+        if(first)
+        {
+            sendcrtlcmd(0, serverIP, 1015, '1234', 'sa', '', '', '');
+            first = false;
+        }
+        var myIcon = new esri.symbols.PictureMarkerSymbol({"url":baseUrl + "/images/run.png","height":16,"width":13,"type":"esriPMS",xoffset:0,yoffset:8});
+        var point = esri.geometry.webMercatorUtils.geographicToWebMercator(new esri.geometry.Point(parseFloat(data[0].la), parseFloat(data[0].lon)));
+        var pictureSymbol = new esri.symbols.PictureMarkerSymbol(myIcon);//图片
+        var content = "";
+        var uid = data[0].uid;
+        var battery = parseInt(data[0].battery);
+        content += "<div class='markInfo' style='background:rbga(255,255,255,0.1)'><span class='title'>"+data[0].name+"(警号:"+data[0].pno+")"+"</span><hr style='height:1px;border:none;border-top:1px solid #CCCCCC;'><table><tr><td class='detail'>设备编号："+data[0].sn+"</td></tr><tr><td class='detail' ";
+        if(battery<=100 && battery>75){
+            content += "style='color:green'>"+"剩余电量："+ battery+"% <img src='images/100.png'/>";
+        }else if(battery<=75 && battery>50){
+            content += "style='color:green'>"+"剩余电量："+ battery+"% <img src='images/75.png'/>";
+        }else if(battery<=50 && battery>25){
+            content += "style='color:#EE9F07'>"+"剩余电量："+ battery+"% <img src='images/50.png'/>";
+        }else if(battery<=25 && battery>10){
+            content += "style='color:#EE9F07'>"+"剩余电量："+ battery+"% <img src='images/25.png'/>";
+        }else{
+            content += "style='color:red'>"+"剩余电量："+ battery+"% <img src='images/10.png'/>";
+        }
+        content +="</td></tr><tr><td class='detail'>速&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;度："+data[0].speed+"</td></tr><tr><td class='detail'>容&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;量："+data[0].storage+"</td></tr><tr><td class='detail' "
+
+        switch(data[0].sign){
+            case 1:
+               content += "style='color:#EE9F07'>信&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;号：弱&nbsp;<img src='images/2.png'/>";
+               break; 
+            case 2:
+               content += "style='color:#EE9F07'>信&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;号：较弱&nbsp;<img src='images/3.png'/>";
+               break; 
+            case 3:
+               content += "style='color:#32B209'>信&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;号：较强&nbsp;<img src='images/4.png'/>";
+               break; 
+            case 4:
+               content += "style='color:#32B209'>信&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;号：强&nbsp;<img src='images/5.png'/>";
+               break; 
+        }
+        content += "</td></tr></table><form accept-charset='utf-8'><input type='button' class='callTo' onclick='setTimeout(function(){sendcrtlcmd(6, &quot;"+serverIP+"&quot;,"+uid+", &quot;1234&quot;, &quot;sa&quot;,&quot;"+ data[0].pno+"&quot;, &quot;&quot;, &quot;&quot;);sendcrtlcmd(8, &quot;"+serverIP+"&quot;,"+uid+", &quot;1234&quot;, &quot;sa&quot;,&quot;"+ data[0].pno+"&quot;, &quot;&quot;, &quot;&quot;);},5000);sendcrtlcmd(1, &quot;"+serverIP+"&quot;,"+uid+", &quot;1234&quot;, &quot;sa&quot;,&quot;"+ data[0].pno+"&quot;, &quot;&quot;, &quot;&quot;);' value='视频呼叫'><input type='button' class='hTrack' onclick='setTimeout(function(){sendcrtlcmd(6, &quot;"+serverIP+"&quot;,"+uid+", &quot;1234&quot;, &quot;sa&quot;,&quot;"+ data[0].pno+"&quot;, &quot;&quot;, &quot;&quot;);sendcrtlcmd(8, &quot;"+serverIP+"&quot;,"+uid+", &quot;1234&quot;, &quot;sa&quot;,&quot;"+ data[0].pno+"&quot;, &quot;&quot;, &quot;&quot;);},5000);sendcrtlcmd(2, &quot;"+serverIP+"&quot;,"+uid+", &quot;1234&quot;, &quot;sa&quot;,&quot;"+ data[0].pno+"&quot;, &quot;&quot;, &quot;&quot;)' value='语音呼叫'></form></div>";
+        if(data[0].name)
+        {
+            var ls = new esri.symbols.TextSymbol(data[0].name).setColor(new esri.Color([192, 17, 54, 0.9])).setFont(new esri.symbol.Font("18px").setWeight(esri.symbol.Font.WEIGHT_BOLD)).setOffset(10, -5).setAlign(esri.symbol.TextSymbol.ALIGN_START);
+            var pointLabel = new esri.graphic(point,ls);
+            pointLabel.id = data[0].pno;
+            labelArr.push(pointLabel);
+            GisObject.toolbar.drawLayer.add(pointLabel);
+        }
+        var infoTemp = new esri.InfoTemplate("警员信息", content);
+        var marker = new esri.Graphic(point,pictureSymbol,{},infoTemp);
+        marker.id = data[0].pno;
+        markerArr.push(marker);
+        GisObject.toolbar.drawLayer.add(marker);
+        // GisObject.loadDefaultCluster(points);//画点
+        GisObject.map.infoWindow.hide();
+    }
+
+    /**
+    * 设置地图中心点
+    */
+    function setMapCenter(data)
+    {
+        var point = esri.geometry.webMercatorUtils.geographicToWebMercator(new esri.geometry.Point(parseFloat(data[0].la), parseFloat(data[0].lon)));
+        GisObject.map.centerAndZoom(point,12);
+    }
+
+    /**
+    * 删除的单个标注
+    * @param {number} id 标注唯一识别标识
+    * @param {number} longitude 经度 简写 lon
+    * @param {number} latitude 纬度 简写 la
+    */
+    function removerMarker(data)
+    {
+        var markerTmp;
+        for(var i =0;i< markerArr.length;i++)
+        {
+            markerTmp = markerArr[i];
+            if(markerTmp.id == data[0])
+            {
+                GisObject.map.infoWindow.hide();
+                GisObject.toolbar.drawLayer.remove(markerTmp);
+                markerArr.splice(i--, 1);
+            }
+        }
+        for(var j =0;j< labelArr.length;j++)
+        {
+            markerTmp = labelArr[j];
+            if(markerTmp.id == data[0])
+            {
+                GisObject.toolbar.drawLayer.remove(markerTmp);
+                labelArr.splice(j--,1);
+            }
+        }
+    }
+
+    /**
+    * 更新坐标点
+    * @param {String} upId 更新id
+    * @param {number} la 经度
+    * @param {number} la 纬度
+    */
+    function updateMarkers(data)
+    {
+        for (var i = 0; i< data.length;i++) 
+        {   
+            var markerTmp;
+            for(var j =0;j< markerArr.length;j++)
+            {
+                markerTmp = markerArr[j];
+                if(markerTmp.id == data[i].pno)
+                {
+                    removerMarker([data[i].pno]);
+                    createMarker([data[i]]);
+                }
+            }
+        }
+    }
+
+    /**
+    * 添加到会议
+    */
+    var count;
+    var polAry = new Array;
+    function senHttp(data)
+    {
+        polAry = [];
+        count = data.length;
+
+        for(var i=0; i<data.length; ++i)
+        {    
+            var temp = data[i];
+            var confid = data[0].member.split(",");
+            var request = new XMLHttpRequest();
+
+            var url = "/pmMap/demo?cmdType=5&confid=" + confid[0] + "&policeNo=" + data[i].sn;
+            request.open( "POST", url, false);
+
+            request.onreadystatechange = function()
+            {
+                if( request.readyState !== 4 ) 
+                    return;
+
+                if( request.status == 200 )
+                {
+                    var obj = new Object;
+                    obj.ret = true;
+                    obj.uid = temp.uid;
+                    obj.confid = parseInt(confid[0]);
+                    obj.msg = temp.name + "(" + temp.pno + ")";
+                    polAry.push(obj);
+                }
+                else
+                {
+                    var obj = new Object;
+                    obj.ret = false;
+                    obj.uid = temp.uid;
+                    obj.confid = parseInt(confid[0]);
+                    obj.msg = temp.name + "(" + temp.pno + ")";
+                    polAry.push(obj);  
+                }
+            }
+            request.send( null );
+        }
+        myInterval();      
+    } 
+
+    function myInterval()
+    {
+        if(polAry.length < count)
+        {
+            setTimeout(myInterval,200);
+            return
+        }
+
+        var msg = "";
+        var success = true;
+        for(var i=0; i<count; ++i)
+        {
+            if(!polAry[i].ret)
+            {
+                msg += i==0?polAry[i].msg:","+polAry[i].msg;
+                success = false;
+            }    
+        }   
+
+        if(!success)
+            alert(msg + "未成功连接到会议!");
+
+        startHY(parseInt(polAry[0].confid));
+
+        setTimeout(startSound, 5000);
+    }
+
+    function startSound()
+    {
+        for(var i=0; i<count; ++i)
+        {
+            if(polAry[i].ret)
+            {
+                sendcrtlcmd(6, serverIP, polAry[i].uid, '1234', 'sa', '', '', '');
+                sendcrtlcmd(8, serverIP, polAry[i].uid, '1234', 'sa', '', '', '');
+            }    
+        }   
+    }
+
+    function startHY(number)
+    {
+        var ocx=document.getElementById('Mymic');//获取控件
+        var jsons="";
+
+        jsons = "{\"msgid\":\"call\",\"uid\":\""+number+"\",\"pno\":\""+number+"\",\"call_type\":\"video\"}";
+        ocx.object.OCXSendMsg(jsons);
+    }
+
+    //sos呼叫视频对讲请求
+    function sosCallVideo(data){
+        var index = data[0].TM_server_ip.search(":");
+        var ip = data[0].TM_server_ip.substring(0, index);
+        var port = data[0].TM_server_ip.substring(index+1);
+
+        if(first)
+        {
+            sendcrtlcmd(0, ip, 1015, '1234', 'sa', '', '', '');
+            first = false;
+        }
+
+        for(var i = 0;i < data.length;i++){
+            sendcrtlcmd(1, ip, data[i].uid, '1234', 'sa', '', '', '');
+            mytimeout(ip, data[i]);                  
+        }
+    }
+
+    function mytimeout(ip, data)
+    {
+        setTimeout(function(){  
+                sendcrtlcmd(6, ip, data.uid, '1234', 'sa', '', '', '');
+                sendcrtlcmd(8, ip, data.uid, '1234', 'sa', '', '', '');
+            },5000);
+    }
+
+    //sos呼叫视频对讲请求
+    function sosCallVoice(data){
+        var index = data[0].TM_server_ip.search(":");
+        var ip = data[0].TM_server_ip.substring(0, index);
+        var port = data[0].TM_server_ip.substring(index+1);
+
+        if(first)
+        {
+            sendcrtlcmd(0, ip, 1015, '1234', 'sa', '', '', '');
+            first = false;
+        }
+
+        for(var i = 0;i < data.length;i++){
+            sendcrtlcmd(2, ip, data[i].uid, '1234', 'sa', '', '', '');
+
+            mytimeout(ip, data[i]);
+        }
+    }
+
+    var initOcx = 0;//注册控件
+    var TVideoCall = 1;//视频呼叫
+    var TAudioCall = 2;//音频呼叫
+    var TVideoSee = 3;//暂未使用
+    var TAudioSee = 4;//暂未使用
+    var TSilence = 5;//静音
+    var TDesilence = 6;//取消静音
+    var TMute = 7;//闭音
+    var TDemute = 8;//取消闭音
+    var TVideoRecordB = 9;//开始录像
+    var TVideoRecordE = 10;//结束录像
+    var TPicture = 11;//截图
+    var TCloseTer = 12;//关闭终端
+    var TGetTers = 13;//获取所有终端状态
+    var TSetScreen = 14;//设置分屏数
+    var TGetScreen = 15;//获取分屏数
+    var TSetPath = 16;//设置本地文件存储路径
+    var TGetPath = 17;//获取本地文件存储路径
+
+    /**
+    *  cmdType 控件操作类型
+    *  srv      web服务器地址
+    *  uid      控件操作账号id--tmmicroconf表uid字段
+    *  pname    控件操作账号名称--tmmicroconf表pname字段
+    *  uname    当前登录用户名称
+    *  pno      人员编号--person表pno字段
+    *  rscreen 分频数：4/6/9/16
+    *  path     本地文件路径
+    **/
+    function sendcrtlcmd(cmdType,srv, uid, pname, uname, pno, rscreen, path)
+    {
+
+        try{
+            var ocx=document.getElementById('Mymic');//获取控件
+            var jsons="";
+            
+            switch (cmdType)
+            {
+                case initOcx:
+                    jsons="{\"server\":\"" + srv + "\",\"uid\":\""+ uid + "\",\"pname\":\"" + pname+ "\",\"displayame\":\"" + uname+ "\"}";
+                    ocx.object.AccountInitDir(jsons);
+                    break;
+                case TVideoCall:
+                    jsons = "{\"msgid\":\"call\",\"uid\":\""+uid+"\",\"pno\":\""+pno+"\",\"call_type\":\"video\"}";
+                    ocx.object.OCXSendMsg(jsons);
+                    break;
+                case TAudioCall:
+                    jsons = "{\"msgid\":\"call\",\"uid\":\""+uid+"\",\"pno\":\""+pno+"\",\"call_type\":\"voice\"}";
+                    ocx.object.OCXSendMsg(jsons);
+                    break;
+                case TSilence:
+                    jsons = "{\"msgid\":\"voicemute\",\"uid\":\""+uid+"\",\"voice_value\":\"1\"}";
+                    ocx.object.OCXSendMsg(jsons);
+                    break;
+                case TDesilence:
+                    jsons = "{\"msgid\":\"voicemute\",\"uid\":\""+uid+"\",\"voice_value\":\"0\"}";
+                    ocx.object.OCXSendMsg(jsons);
+                    break;
+                case TMute:
+                    jsons = "{\"msgid\":\"voiceshutup\",\"uid\":\""+uid+"\",\"voice_value\":\"1\"}";
+                    ocx.object.OCXSendMsg(jsons);
+                    break;
+                case TDemute:
+                    jsons = "{\"msgid\":\"voiceshutup\",\"uid\":\""+uid+"\",\"voice_value\":\"0\"}";
+                    ocx.object.OCXSendMsg(jsons);
+                    break;
+                case TVideoRecordB:
+                    jsons = "{\"msgid\":\"startmp4\",\"uid\":\""+uid+"\",\"path\":\""+videoPath+"\"}";
+                    ocx.object.OCXSendMsg(jsons);
+                    break;
+                case TVideoRecordE:
+                    jsons = "{\"msgid\":\"stopmp4\",\"uid\":\""+uid+"\"}";
+                    ocx.object.OCXSendMsg(jsons);
+                    break;
+                case TPicture:
+                    jsons = "{\"msgid\":\"captrue\",\"uid\":\""+uid+"\",\"path\":\""+videoPath+"\"}";
+                    ocx.object.OCXSendMsg(jsons);
+                    break;
+                case TCloseTer:
+                    jsons = "{\"msgid\":\"endcall\",\"uid\":\""+uid+"\"}";
+                    ocx.object.OCXSendMsg(jsons);
+                    break;
+                case TGetTers:
+                    var j = ocx.object.GetCallsInfo();
+                    return j;
+                case TSetScreen:
+                    ocx.object.WriteConfig('split_screen_count',rscreen);
+                    break;
+                case TGetScreen:
+                    var scount = ocx.object.ReadConfig('split_screen_count');
+                    return scount;
+                case TSetPath:
+                    ocx.object.WriteConfig('video_path',path);
+                    break;
+                case TGetPath:
+                    var p = ocx.object.ReadConfig('video_path');
+                    return p;
+            }
+        }
+        catch(e)
+        {
+
+        }
+    }
+</script>
+</body>
+</html>

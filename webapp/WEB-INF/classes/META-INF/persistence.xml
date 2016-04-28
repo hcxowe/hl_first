@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<persistence xmlns="http://java.sun.com/xml/ns/persistence" version="2.0">
+	
+	<persistence-unit name="springJpa" transaction-type="RESOURCE_LOCAL">
+		<provider>org.hibernate.ejb.HibernatePersistence</provider>
+		<class>com.gosun.core.entity.IdEntity</class>
+		<class>com.goldmsg.gmrtc.entity.TDeviceInfo</class>
+		<class>com.goldmsg.gmrtc.entity.TGatewayInfo</class>
+		<class>com.goldmsg.gmrtc.entity.TUserInfo</class>
+<!-- 		<class>com.gosun.mvss.domain.UserInfo</class>
+        <class>com.gosun.mvss.domain.AccountInfo</class> -->
+		<properties>
+			<!-- 
+			<property name="hibernate.connection.driver_class" value="oracle.jdbc.driver.OracleDriver"/>
+			<property name="hibernate.connection.url" value="jdbc:oracle:thin:@192.168.16.53:1521:C3MVIDEO"/>
+			<property name="hibernate.connection.username" value="pscp"/>
+			<property name="hibernate.connection.password" value="pscp"/>
+			<property name="hibernate.dialect" value="org.hibernate.dialect.OracleDialect"/>
+			-->
+			<property name="hibernate.show_sql" value="true"/>
+			<property name="hibernate.format_sql" value="true"/>
+			<property name="hibernate.use_sql_comments" value="false"/>
+			<property name="hibernate.hbm2ddl.auto" value="none"/>
+			
+			<!-- 配置hibernate缓存 -->
+			<property name="hibernate.cache.use_second_level_cache" value="true"/>
+			<property name="hibernate.cache.use_query_cache" value="true"/>
+			<property name="hibernate.cache.provider_class" value="org.hibernate.cache.EhCacheProvider"/>
+			<property name="hibernate.generate_statistics" value="true"/>
+		</properties>
+	</persistence-unit>
+</persistence>

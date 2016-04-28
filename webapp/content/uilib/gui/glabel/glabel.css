@@ -1,0 +1,184 @@
+@CHARSET "UTF-8";
+
+
+.glabel {
+	font-size: 12px;
+	font-family: 微软雅黑;
+	background-color: #ABBAC3;
+	border-radius: 0;
+	color: #fff;
+	display: inline-block;
+	font-weight: 400;
+	text-shadow: none;
+	padding: 4px 5px;
+	text-align: center;
+	vertical-align: baseline;
+	white-space: nowrap;
+	position: relative;
+}
+
+/**
+  * 添加链接标签
+  */
+.glabel a {
+	color : #fff ;
+	outline : none ;
+	text-decoration : none ;
+}
+.glabel:hover a {
+	text-decoration : underline  ;
+}
+
+/**
+  * 标签
+  */
+.glabel i {
+	padding-right: 4px;
+}
+/**
+  * 添加圆角
+  */
+.glabel.radius {
+	border-radius: 10px;
+	padding: 3px 8px; 
+}
+/**
+  *方向
+  */
+.glabel.direct-left-out:before{
+	position: absolute;
+	content: "";
+	border: 10px solid transparent;
+	border-right-color : #ABBAC3 ;
+	border-width: 12px;
+	content: "";
+	left: -24px;
+	position: absolute;
+	top: -0.3px;
+	z-index : -1 ;
+}
+/**
+  *方向
+  */
+.glabel.direct-left-in:before{
+	position: absolute;
+	content: "";
+	border : 12px solid transparent ;
+	border-right-color : #ABBAC3 ;
+    border-left-color : transparent;
+    border-top-color : #ABBAC3;
+    border-bottom-color : #ABBAC3;
+	left : -12px ;
+	top : 0px ;
+	z-index : -1 ;
+	
+}
+/**
+  *方向
+  */
+.glabel.direct-right-out:after{
+	position: absolute;
+	content: "";
+	border: 10px solid transparent;
+	border-left-color : #ABBAC3 ;
+	border-width: 12px;
+	content: "";
+	right: -24px;
+	position: absolute;
+	top: 0px;
+	z-index : -1 ;
+}
+
+/**
+  * 颜色情景块
+  */
+.glabel.info {
+	background-color: #3A87AD;
+}
+
+.info.direct-left-out:before{
+	border-right-color : #3A87AD ;
+}
+.info.direct-left-in:before{
+    border-right-color :#3A87AD  ;
+    border-top-color : #3A87AD ;
+    border-bottom-color : #3A87AD ;
+}
+
+.info.direct-right-out:after{
+	border-left-color : #3A87AD ;
+}
+.glabel.success {
+	background-color: #82AF6F;
+}
+.success.direct-left-out:before{
+	border-right-color : #82AF6F ;
+}
+.success.direct-left-in:before{
+    border-right-color :#82AF6F   ;
+    border-top-color : #82AF6F  ;
+    border-bottom-color : #82AF6F  ;
+}
+.success.direct-right-out:after{
+	border-left-color : #82AF6F ;
+}
+.glabel.warning {
+	background-color: #F89406;
+}
+
+.warning.direct-left-out:before{
+	border-right-color : #F89406 ;
+}
+.warning.direct-right-out:after{
+	border-left-color : #F89406 ;
+}
+.warning.direct-left-in:before{
+    border-right-color :#F89406   ;
+    border-top-color : #F89406  ;
+    border-bottom-color : #F89406  ;
+}
+.glabel.danger {
+	background-color: #D15B47;
+}
+
+.danger.direct-left-out:before{
+	border-right-color : #D15B47 ;
+}
+.danger.direct-left-in:before{
+    border-right-color :#D15B47   ;
+    border-top-color : #D15B47  ;
+    border-bottom-color : #D15B47  ;
+}
+.danger.direct-right-out:after{
+	border-left-color : #D15B47 ;
+}
+.glabel.wounded {
+	background-color: #8E44AD;
+}
+
+.wounded.direct-left-out:before{
+	border-right-color : #8E44AD ;
+}
+.wounded.direct-left-in:before{
+    border-right-color : #8E44AD   ;
+    border-top-color : #8E44AD  ;
+    border-bottom-color : #8E44AD  ;
+}
+.wounded.direct-right-out:after{
+	border-left-color : #8E44AD ;
+}
+.glabel.broken {
+	background-color: #333333;
+}
+
+.broken.direct-left-out:before{
+	border-right-color : #333333 ;
+}
+.broken.direct-left-in:before{
+    border-right-color : #333333   ;
+    border-top-color : #333333  ;
+    border-bottom-color : #333333  ;
+}
+.broken.direct-right-out:after{
+	border-left-color : #333333 ;
+}

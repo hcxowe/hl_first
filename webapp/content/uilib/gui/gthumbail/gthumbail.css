@@ -1,0 +1,308 @@
+
+@charset "UTF-8";
+.gthumbail-list {
+}
+.gthumbail {
+    background-color: #fff;
+    border: 1px solid #d9d9d9;
+    color: #fff;
+    display: inline-block;
+    font-family: 微软雅黑;
+    font-size: 13px;
+    margin-bottom: 8px;
+    margin-right: 5px;
+    position: relative;
+}
+.gthumbail.padding5 {
+    padding: 5px;
+}
+.gthumbail.width220 {
+    width: 220px;
+}
+.gthumbail .plevel a {
+    color: #666;
+    text-decoration: underline;
+}
+.gthumbail .dlevel {
+    color: #666;
+    font-size: 11px;
+    padding: 5px 0;
+}
+.gthumbail .dlevel .dleft {
+}
+.gthumbail .dlevel .dright {
+	float: right;
+}
+
+.gthumbail .dlevel .dright i{
+	margin-right : 5px;
+}
+.gthumbail .intro {
+    color: #555;
+    font-size: 11px;
+    height: 60px;
+    overflow: hidden;
+    margin-bottom: 35px;
+}
+.gthumbail .editdel {
+    bottom: 0;
+    color: #555;
+    font-size: 16px;
+    position: absolute;
+    width: 100%;
+    left: 0px;
+    background-color: #F4F4F4;
+    border-top : 1px solid #ccc;
+}
+.gthumbail .editdel span {
+    display: inline-block;
+    text-align: center;
+    width: 111px;
+    padding: 5px 0px;
+    cursor : pointer;
+}
+
+.gthumbail .editdel span:hover i{
+	color : #C53A27;
+}
+
+.gthumbail .editdel span.border-right{
+	border-right : 1px solid #ccc;
+}
+
+.gthumbail .hidden{
+	display : none ;
+}
+
+/* 提示样式 */
+.gthumbail .tip{
+    left: 0;
+    margin: 0 auto;
+    position: absolute;
+    top: 60px;
+    transition: all 0.2s ease 0s;
+    z-index: 200;
+    width : 100%;
+    text-align : center;
+   
+}
+
+.gthumbail .tip span{
+	background: rgba(66, 139, 202, 0.9) none repeat scroll 0 0;
+	padding : 5px;
+	opacity: 0;
+}
+.gthumbail .tip span i{
+	margin-right : 5px;
+}
+.gthumbail .tip.show span{
+	opacity: 1;
+}
+
+
+/* 选中样式 */
+.gthumbail .icon{
+    color: #fff;
+    font-size: 18px;
+    position: absolute;
+    right: 11px;
+    top: 6px;
+    display : none ;
+}
+
+.gthumbail .icon.current{
+	display : inline ;
+}
+
+/* 背景图片 */
+.gthumbail img {
+	width: 200px;
+	height: 150px; 
+}
+
+/* 底部描述 */
+.gthumbail.height20{
+	/* height : 176px; */
+}
+.gthumbail .desc{
+	color : #666;
+	text-align : center ;
+	/* padding : 3px 0px ; */
+	height : 25px;
+	
+}
+.gthumbail .desc i{
+	margin: 0 5px;
+  /*   position: relative;
+    top: 5px; */
+    line-height : 25px;
+    cursor : pointer ;
+    opacity: 0;
+	transition: all 0.2s ease 0s;
+}
+.gthumbail .desc i:hover{
+	color : #176785;
+}
+.gthumbail .desc .ileft {
+	float : left;
+	
+}
+.gthumbail .desc .iright {
+	float : right;
+}
+
+.gthumbail .desc .text{
+	width : 100px;
+	display : inline-block ;
+	text-overflow : ellipsis;
+	overflow : hidden ;
+	white-space : nowrap  ;
+	line-height : 25px;
+}
+
+/* 遮罩层 */
+.gthumbail .mask {
+	position: absolute;
+	left: 0px;
+	top: 0px;
+	width: 200px;
+	height: 150px;
+	background-color: rgba(0, 0, 0, 0.50);
+	opacity: 0;
+	color : #fff ;
+	transition: all 0.2s ease 0s;
+	z-index : 100 ;
+}
+
+.gthumbail .mask.show{
+	opacity: 50;
+}
+
+.gthumbail .mask .content{
+	padding : 5px;
+	width : 90%;
+	height : 100%;
+}
+
+.gthumbail .mask .iconbar {
+	margin: 0px auto;
+	line-height : 150px;
+	text-align: center;
+}
+
+.gthumbail .mask .iconbar i {
+	font-size: 18px;
+	cursor: pointer;
+	margin: 0px 3px;
+}
+
+.gthumbail:hover .mask {
+	opacity: 50;
+}
+.gthumbail .mask .iconbar i:hover {
+	color: #176785;
+}
+.gthumbail:hover .desc i{
+	 opacity: 1;
+}
+
+/*工具栏*/
+.gthumbail .toolbar {
+	position: absolute;
+	width: 100%;
+	height: 0px;
+	line-height: 25px;
+	bottom: 0px;
+	left: 0px;
+	background-color: rgba(0, 0, 0, 0.5);
+	transition: all 0.2s ease 0s; 
+}
+
+.gthumbail:hover .toolbar {
+   height: 25px; 
+}
+.gthumbail .toolbar i {
+	cursor: pointer;
+	margin: 0px 2px;
+}
+
+.gthumbail .toolbar i:hover{
+	color: #F39C12;
+}
+
+.gthumbail .toolbar .left {
+	float: left;
+	margin-left: 5px;
+	font-size: 12px;
+	overflow: hidden;
+	white-space: nowrap;
+	text-overflow: ellipsis;
+	width: 100px;
+	border : none ;
+	height : 25px;
+}
+
+.gthumbail .toolbar .right {
+	float: right; 
+	margin-right: 5px;
+}
+
+
+.gthumbail .toolbar .center{
+	width: 100%;
+	text-align : center ;
+	display : inline-block ;
+	width : 100%;
+	
+}
+
+
+.gthumbail .tags {
+	display: inline-block;
+	position: absolute;
+	background-color: transparent;
+	
+	font-size: 11px;
+}
+
+.gthumbail .tags.tleft{
+	direction: rtl; /*文档流像*/
+	bottom: 5px;
+	right: 1px;
+}
+.gthumbail .tags.tright{
+	top: 20px;
+	left: 1px;
+}
+
+
+.gthumbail .tags .tag {
+	background-color: rgba(41, 128, 185, 0.9);
+	display: table;
+	margin: 1px 0px 0px;
+	padding: 2px;
+	margin: 2px 0px;
+	text-align: center;
+	direction: ltr;
+}
+
+
+.gthumbail .tags .tag-info {
+	background-color: rgba(41, 128, 185, 0.9);
+}
+
+.gthumbail .tags .tag-success {
+	background-color: rgba(39, 174, 96, 0.9);
+}
+
+.gthumbail .tags .tag-warning {
+	background-color: rgba(230, 126, 34, 0.9);
+}
+
+.gthumbail .tags .tag-danger {
+	background-color: rgba(231, 76, 60, 0.9);
+}
+
+.gthumbail .tags .tag-wounded {
+	background-color: rgba(142,68,173, 0.9);
+}

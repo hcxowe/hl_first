@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:jaxws="http://cxf.apache.org/jaxws"
+	xsi:schemaLocation="
+	http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+	http://cxf.apache.org/jaxws http://cxf.apache.org/schemas/jaxws.xsd">
+	
+	<import resource="classpath:META-INF/cxf/cxf.xml" />
+	<import resource="classpath:META-INF/cxf/cxf-servlet.xml" />
+	
+	<bean id="wstestServicceBean" class="com.goldmsg.gmrtc.webservice.WSTestServiceImpl"/>
+	<bean id="outLoggingInterceptor" class="org.apache.cxf.interceptor.LoggingOutInterceptor"/>
+	<!-- 注意下面的address，这里的address的名称就是访问的WebService的name -->
+	<jaxws:server id="wstestService" serviceClass="com.goldmsg.gmrtc.webservice.IWSTestService" address="/wstest">
+	    <jaxws:serviceBean>
+	        <!-- 要暴露的 bean 的引用 -->
+	        <ref bean="wstestServicceBean"/>
+	    </jaxws:serviceBean>
+	    <jaxws:outInterceptors>
+	        <ref bean="outLoggingInterceptor"/>
+	    </jaxws:outInterceptors>
+	</jaxws:server>
+	
+</beans>

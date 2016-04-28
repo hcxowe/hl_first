@@ -1,0 +1,78 @@
+@CHARSET "UTF-8";
+.header {
+  font-family: Microsoft Yahei;
+  font-size: 16px;
+  width: 100%;
+  height: 65px;
+  background-color: #0078D7;  
+  position: relative;
+  z-index: 2;
+}
+
+.header:before, .header:after {
+  display: block;
+  content: " ";
+  height: 65px;
+  width: 277px;
+  position: absolute;
+  top: 0;
+  z-index: -2;
+}
+.header:before {
+  left: 0;
+}
+.header:after {
+  width: 241px;
+  right: 0;
+}
+
+.header a {
+  outline: none;
+  text-decoration: none;
+  color: #fff;
+  line-height: 65px;
+}
+
+.header .ma-brand {
+  display: inline-block;
+  padding: 0px 45px 0 10px;
+  height: 65px;
+  float: left;
+}
+.ma-nav {
+  display: block;
+  float: left;
+  margin: 0;
+}
+.ma-nav > li {
+  display: inline-block;
+  float: left;
+  position: relative;
+}
+.ma-nav > li > a {
+  display: inline-block;
+  padding: 0 10px;
+  text-decoration: none;
+  text-align: center;
+  vertical-align: middle;
+}
+.ma-nav > li > a img {
+  margin-top: -8px;
+}
+.ma-nav > li:hover, .ma-nav > li.ma-active {
+  background-color: #2959A3;
+}
+
+.ma-nav-clear > li:hover,
+.ma-nav-clear > li.ma-active {
+  background-color: transparent;
+}
+
+.ma-nav-clear > li > a:hover i,
+.ma-nav-clear > li > a:active i {
+  color: #56FAEA;
+}
+
+.ma-nav-clear > li > a{
+  display: inline;
+}

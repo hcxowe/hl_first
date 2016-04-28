@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+	<meta name="viewport" content="initial-scale=1, maximum-scale=1,user-scalable=no"/>
+	<link rel="stylesheet" href="http://192.168.21.20:8088/jsapi/3.14/dijit/themes/claro/claro.css">
+    <link rel="stylesheet" href="http://192.168.21.20:8088/jsapi/3.14/esri/css/esri.css">
+	<style type="text/css">
+		body, html,#mapDiv {width: 100%;height: 100%;overflow: hidden;margin:0;font-family:"微软雅黑";}
+	</style>
+	<script type="text/javascript" src="config.js"></script>
+	<script src="http://192.168.21.20:8088/jsapi/3.14/init.js"></script>
+</head>
+<body>
+	<div id="mapDiv"></div>
+</body>
+</html>
+<script type="text/javascript">
+//画历史轨迹
+function historyTrack(points)
+{
+	var arr = [];
+	var obj = [];
+	for(var i=0;i<points.length;i++)
+	{
+		obj = [points[i].la,points[i].lon];
+		arr.push(obj);
+	}
+
+	var symbol = new esri.symbols.PictureMarkerSymbol({"url":baseUrl + "/images/run.png","height":16,"width":13,
+		"type":"esriPMS",xoffset:0,yoffset:8});
+
+	var k = points.length - 1;
+	//创建模版
+	var content1 = "<div><p>警员名称: "+points[0].name+"</p><p>采集时间："+points[0].submit_time+"</p><p>经&nbsp;&nbsp;纬&nbsp;度："+points[0].lon+"-"+points[0].la+"</p></div>";
+	var infoTemp1 = new esri.InfoTemplate("警员信息", content1);
+	GisObject.addPictureMarker(arr[0][0],arr[0][1],symbol,{},infoTemp1);
+
+	var content2 = "<div><p>警员名称: "+points[k].name+"</p><p>采集时间："+points[k].submit_time+"</p><p>经&nbsp;&nbsp;纬&nbsp;度："+points[k].lon+"-"+points[k].la+"</p></div>";
+	var infoTemp2 = new esri.InfoTemplate("警员信息", content2);
+	GisObject.addPictureMarker(arr[k][0],arr[k][1],symbol,{},infoTemp2);
+
+	var point = esri.geometry.webMercatorUtils.geographicToWebMercator(new esri.geometry.Point(parseFloat(arr[0][0]), parseFloat(arr[0][1])));
+	GisObject.map.centerAndZoom(point,12);
+
+
+	GisObject.addPolyline(arr);//画线
+	GisObject.drawDefaultTrack(arr);//画箭头
+}
+
+//删除所有轨迹
+function removerAll()
+{
+	GisObject.toolbar.drawLayer.clear();
+	GisObject.toolbar.markerLayer.clear();
+}
+
+function removerHis()
+{
+
+}
+
+dojo.require("extras.MapInitObject");
+var GisObject;
+
+dojo.ready(function(){
+	GisObject = new extras.MapInitObject("mapDiv");
+	var tmpPoint = new esri.geometry.Point(defaultPoint[0], defaultPoint[1]);
+    GisObject.setMapOptions({
+        logo:false,
+        extent : "12557877.595482401,2596928.9267310356,12723134.450635016,2688653.360673282",
+        level:defaultPoint[2],
+        center:tmpPoint
+    });
+	
+	GisObject.addDefaultLayers();
+});
+</script>

@@ -1,0 +1,131 @@
+* {
+  outline: none !important;
+  border-radius: 0 !important;
+}
+
+body {
+  font: 12px/1.5 "Microsoft Yahei", sans-serif;
+}
+
+a:link,
+a:focus,
+a:visited,
+a:active,
+a:hover {
+  text-decoration: none;
+}
+
+h1,
+h2,
+h3,
+h4 {
+  font-family: "Microsoft Yahei";
+}
+
+label {
+  font-size: 16px;
+  font-weight: 400;
+}
+
+ul {
+  list-style: none;
+}
+
+p {
+  font-size: 16px;
+}
+
+i {
+  margin-left: 5px;
+  margin-right: 5px;
+}
+
+.ma-aside {
+  position: relative;
+  margin: 0;
+  padding: 0;
+  -webkit-transition: margin-left .5s;
+  -moz-transition: margin-left .5s;
+  -ms-transition: margin-left .5s;
+  -o-transition: margin-left .5s;
+  transition: margin-left .5s;
+}
+.ma-aside.slide {
+  margin-left: 230px;
+}
+.ma-aside .sidebar {
+  background-color: #fff;
+  border-right: 1px solid #e1e1e1;
+}
+.ma-aside .panel-group .panel + .panel {
+  margin-top: 0;
+}
+
+.sidebar {
+  width: 230px;
+  height: 100%;
+  padding: 0;
+  position: fixed;
+  left: -230px;
+  right: auto;
+  z-index: 1;
+  -webkit-transition: left .5s;
+  -moz-transition: left .5s;
+  -ms-transition: left .5s;
+  -o-transition: left .5s;
+  transition: left .5s;
+  overflow-y: hidden;
+}
+.sidebar.show {
+  left: 0;
+  display: block;
+}
+
+.ma-aside .menu-list {
+  border: 0;
+  box-shadow: none;
+}
+.ma-aside .menu-list > .panel-heading {
+  background-color: #fff;
+}
+.ma-aside .menu-list > .panel-heading:hover {
+  background-color: #ededed;
+}
+
+.menu-list a {
+  color: #333;
+  display: block;
+  -webkit-transition: background .2s linear 0s;
+  -moz-transition: background .2s linear 0s;
+  -ms-transition: background .2s linear 0s;
+  -o-transition: background .2s linear 0s;
+  transition: background .2s linear 0s;
+}
+.menu-list .menu-header {
+  padding: 0;
+}
+.menu-list .menu-header a {
+  height: 44px;
+  line-height: 44px;
+  padding: 0 30px 0 25px;
+}
+.menu-list .menu-header .icon-sm {
+  font: 12px;
+  color: #CFCFCF;
+}
+.menu-list .menu-header .icon-right {
+  float: right;
+  line-height: 44px;
+}
+.menu-list .list-group-item {
+  color: #737373;
+  text-indent: 59px;
+  line-height: 30px;
+  padding: 0;
+  border: 0;
+  border-radius: 0;
+  background: #fcfcfc;
+}
+.menu-list .list-group-item:hover {
+  background: #f2f2f2;
+}

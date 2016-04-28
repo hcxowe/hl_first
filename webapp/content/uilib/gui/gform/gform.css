@@ -1,0 +1,177 @@
+
+@charset "UTF-8";
+
+i{
+	font-family : FontAwesome !important ;
+}
+
+*{
+	font-family :微软雅黑 !important;
+}
+
+input {
+    outline:  none;
+}
+input[type="text"],input[type="password"] {
+    border: 1px solid #d9d9d9;
+    height: 25px;
+    width: 148px;
+    font-size : 12px ;
+    box-shadow: inset 0 0 2px #d9d9d9 ;
+    
+}
+.bcaret{
+	border: 1px solid #d9d9d9;
+    height: 25px;
+    width: 140px;
+    font-size : 12px ;
+    box-shadow: inset 0 0 2px #d9d9d9 ;
+    position :relative ;
+    display : inline-block ;
+}
+.bcaret input {
+	border : none  ;
+	box-shadow : none ;
+	width : 130px;
+	height : 23px;
+}
+.bcaret:after{
+	width : 0;
+	height : 0;
+	content : "" ;
+	border : 5px solid transparent ;
+	border-top-color : #999;
+	position: absolute;
+    right: 5px;
+    top: 9px;
+}
+
+input.width-150{
+	width:150px;
+}
+
+input.width-200{
+	 width: 200px;
+}
+
+input.width-250{
+	 width: 250px;
+}
+
+textarea {
+    border: 1px solid #ccc;
+    outline:  none;
+    overflow: auto;
+    font-size : 12px ;
+     box-shadow: inset 0 0 2px #d9d9d9 ;
+}
+.gform {
+    font-size: 12px;
+    padding: 10px;
+    width: 98%;
+    padding-top : 15px;
+}
+.gform .grow {
+    padding: 5px;
+    width: 100%;
+}
+.gform .grow-7 {
+    width: 70%;
+}
+.gform .grow-8 {
+    width: 80%;
+}
+
+.gform .grow-9 {
+    width: 90%;
+}
+
+.gform .grow span.col-10 {
+    display: inline-block;
+    position: relative;
+    width: 95%;
+}
+.gform .grow span.col-3 {
+    display: inline-block;
+    position: relative;
+    width: 29%;
+}
+.gform .grow span.col-5 {
+    display: inline-block;
+    position: relative;
+    width: 49%;
+}
+.gform .grow span.col-7 {
+    display: inline-block;
+    position: relative;
+    width: 69%;
+}
+.gform .grow span.col-3 {
+    display: inline-block;
+    position: relative;
+    width: 32%;
+}
+
+.gform .grow span.col-2 {
+    display: inline-block;
+    position: relative;
+    width: 20%;
+}
+
+.gform .grow span.col-1 {
+    display: inline-block;
+    position: relative;
+    width: 10%;
+}
+
+.gform .grow div.col-8 {
+    display: inline-block;
+    width: 80%;
+}
+
+.gform .grow div.col-8 span {
+    width: 24%;
+    display: inline-block;
+    margin : 5px 0px;
+   color: #999;
+}
+
+
+.gform .grow span p{
+	color : #666;
+}
+
+.gform .grow span.label {
+    color: #666666;
+    font-size: 12px;
+    font-weight: normal;
+    text-align : center ;
+    line-height : 25px;
+}
+.gform .grow span label {
+    font-size: 12px;
+    font-weight: normal;
+    text-align : center ;
+    vertical-align: top;
+    line-height : 25px;
+    color : #666666 ;
+}
+.gform .grow span input[type="radio"], .gform .grow span input[type="checkbox"] {
+    margin-right: 5px;
+    position: relative;
+    top: 2px;
+    box-shadow: 0 0 1px #d9d9d9 inset;
+}
+.gform .grow span textarea:focus {
+    box-shadow: none;
+}
+.gform .grow span textarea {
+    border: 1px solid #d9d9d9;
+    border-radius: 0;
+    height: 100px;
+    width: 95%;
+    box-shadow: 0 0 1px #d9d9d9 inset;
+}
+
+
+

@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+			xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:context="http://www.springframework.org/schema/context"
+			xmlns:tx="http://www.springframework.org/schema/tx" xmlns:mvc="http://www.springframework.org/schema/mvc"
+			xmlns:task="http://www.springframework.org/schema/task" xmlns:aop="http://www.springframework.org/schema/aop"
+			xsi:schemaLocation="http://www.springframework.org/schema/beans  
+	    http://www.springframework.org/schema/beans/spring-beans.xsd  
+	    http://www.springframework.org/schema/mvc 
+        http://www.springframework.org/schema/mvc/spring-mvc.xsd
+	    http://www.springframework.org/schema/context   
+	    http://www.springframework.org/schema/context/spring-context.xsd  
+	    http://www.springframework.org/schema/tx
+	    http://www.springframework.org/schema/tx/spring-tx.xsd
+	    http://www.springframework.org/schema/task 
+	    http://www.springframework.org/schema/task/spring-task.xsd     
+	    http://www.springframework.org/schema/aop 
+	    http://www.springframework.org/schema/aop/spring-aop.xsd"
+			default-autowire="byName">
+			<!-- SpringMVC的配置文件 -->
+
+			<!-- 配置视图资源前缀与后缀 -->
+			<bean
+						class="org.springframework.web.servlet.view.InternalResourceViewResolver">
+						<property name="prefix" value="/WEB-INF/jsp/"></property>
+						<property name="suffix" value=".jsp"></property>
+			</bean>
+
+			<!-- 定义无需Controller的url<->view直接映射 -->
+			<!-- <mvc:view-controller path="/" view-name="redirect:/user/index.action"/> -->
+
+			<!-- 异常处理 -->
+			<bean id="exceptionResolver"
+						class="com.gosun.core.exception.CustomSimpleMappingExceptionResolver">
+						<property name="exceptionMappings">
+									<props>
+												<prop key="java.lang.Exception">error/500</prop>
+												<prop key="com.gosun.core.exception.SystemException">error/500</prop>
+												<prop key="com.gosun.core.exception.BusinessException">error/error</prop>
+									</props>
+						</property>
+			</bean>
+
+			<!-- 注册MVC驱动 -->
+			<mvc:annotation-driven>
+						<!-- 解决springMVC中文乱码的问题 -->
+						<mvc:message-converters register-defaults="true">
+									<bean
+												class="org.springframework.http.converter.StringHttpMessageConverter">
+												<constructor-arg value="UTF-8" />
+												<property name="supportedMediaTypes">
+															<list>
+																		<value>application/json;charset=UTF-8</value>
+																		<value>text/plain;charset=UTF-8</value>
+															</list>
+												</property>
+									</bean>
+						</mvc:message-converters>
+			</mvc:annotation-driven>
+
+			<!-- 配置注解支持 -->
+			<context:annotation-config />
+
+
+			<!-- 过滤掉静态资源的拦截 设置缓存为一年最大限度利用缓存 -->
+			<mvc:resources location="/content/" cache-period="31556926"
+						mapping="/content/**"></mvc:resources>
+
+			<mvc:resources location="/logo/" cache-period="31556926"
+						mapping="/logo/**"></mvc:resources>
+
+			<!-- 启用@MatrixVariable功能 <mvc:annotation-driven enable-matrix-variables="true"/> -->
+
+			<!-- 使用springMVC文件上传功能 -->
+			<bean id="multipartResolver"
+						class="org.springframework.web.multipart.commons.CommonsMultipartResolver">
+						<!-- one of the properties available; the maximum file size in bytes -->
+						<property name="maxUploadSize" value="10000000" />
+			</bean>
+
+			<!-- 配置要扫描的包，可配置多个，scan the package and the sub package -->
+			<context:component-scan base-package="com.goldmsg.gmrtc.controller" />
+			<context:component-scan base-package="com.gosun.core.controller" />
+
+			<!-- 用于开启Spring对@AspectJ风格切面的支持 -->
+			<aop:aspectj-autoproxy></aop:aspectj-autoproxy>
+			<mvc:interceptors>
+						<!-- 使用bean定义一个Interceptor，直接定义在mvc:interceptors根下面的Interceptor将拦截所有的请求 -->
+						<!-- 开启openSessionInView -->
+						<bean name="openSessionInViewInterceptor"
+									class="org.springframework.orm.jpa.support.OpenEntityManagerInViewInterceptor">
+									<property name="entityManagerFactory">
+												<ref bean="entityManagerFactory" />
+									</property>
+						</bean>
+						<!-- session超时拦截器 -->
+						<!-- <bean class="com.goldmsg.gmrtc.interceptor.SessionInterceptor" 
+									/> -->
+			</mvc:interceptors>
+</beans>

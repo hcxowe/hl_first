@@ -1,0 +1,154 @@
+@charset "UTF-8";
+.gdropdown{
+   border : 1px solid #d9d9d9;
+   position: absolute; 
+   background-color : #fff;
+   font-family: 微软雅黑;
+   font-size : 12px; 
+   left : 0px ;
+   top : 0px;
+   display : none ;
+   overflow : auto ; /* 越出边界出现滚动条 */
+   max-height : 250px;
+   z-index : 1000;
+}
+
+.gdropdown.shadow{
+   box-shadow: 0 0 8px rgba(0, 0, 0, 0.1), 0 0 256px
+		rgba(255, 255, 255, 0.3);
+}
+
+.gdropdown .header{
+   
+   border-bottom: 1px solid #858585 ;
+   padding: 5px;
+   font-size: 12px ;
+   
+}
+.gdropdown .header .title { 
+  
+}
+.gdropdown .header .tool {
+	float: right;
+	margin-right: -3px;
+}
+.gdropdown .header .tool span {
+	border-radius: 10px;
+	cursor: pointer;
+	margin-left: -5px;
+	padding: 2px 5px;
+}
+.gdropdown .header .tool span:hover{
+	background-color: #E8E8E8;
+}
+
+.gdropdown .body {
+   padding : 5px ;
+   overflow : none ;
+}
+
+.gdropdown ul.list{
+   margin :0px ;
+   outline:  none ;
+   list-style: none ;
+   padding : 0px ;
+}
+
+.gdropdown ul.list li{ 
+   padding : 3px 5px;
+   cursor : pointer ;
+   position :relative ;
+}
+
+.gdropdown ul.list li:hover{
+   background-color : #6693D7 ;
+   color : #fff;
+}
+
+.gdropdown ul.list li i{
+	margin : 0px 5px
+}
+.gdropdown ul.list li.devider{
+	background-color : #ccc;
+	height : 1px; 
+	padding : 0px ;
+}
+
+.gdropdown .body ul.list{
+	width : 220px;
+}
+
+
+.gdropdown ul.list li .thumbail i{
+	font-size : 20px;
+	margin : 0px;
+	color : #fff;
+	padding : 5px;
+}
+.gdropdown ul.list li .content{
+	position : absolute ;
+	left : 40px;
+	top : 5px;
+}
+
+.gdropdown ul.list li .content span{
+	display: inline-block;
+    width: 175px;
+    text-overflow :ellipsis ;
+    white-space : nowrap ;
+}
+.gdropdown ul.list li .content span.clock{
+	font-size : 11px;
+}
+.gdropdown ul.list li .content span.clock i{
+	margin : 0px 3px 0px 0px ;
+}
+
+/*色块 */
+.fa.bg-info{
+	background-color : #428BCA
+}
+.fa.bg-success{
+	background-color : #5CB85C
+}
+.fa.bg-warning{
+	background-color : #F39C12
+}
+.fa.bg-danger{
+	background-color : #D9534F
+}
+.fa.bg-wounded{
+	background-color : #8E44AD
+}
+/* 触发下拉框的 样式 */
+
+
+.tri-dropdown{
+    border: 1px solid #d9d9d9;
+    height: 26px;
+    width: 148px;
+    position : relative ;
+    display : inline-block;
+    box-shadow: inset 0 0 2px #d9d9d9 ;
+    line-height : 26px;
+    padding-left : 5px;
+}
+
+.tri-dropdown:active{
+	background-color : #ccc;
+}
+
+.tri-dropdown:before{
+	width : 0;
+	height : 0;
+	content : "" ;
+	border : 5px solid transparent ;
+	border-top-color : #999;
+	position: absolute;
+    right: 5px;
+    top: 10px;
+}
+
+
+
+
